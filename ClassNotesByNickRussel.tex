@@ -1,12 +1,12 @@
-\documentclass[12pt]{article}
+\documentclass[oneside]{book}
 %\includeonly{title,def,biblio,abstract}
-\setlength{\oddsidemargin}{0.0in}
-\setlength{\textwidth}{6.5in}
-\setlength{\baselineskip}{19pt}
-\setlength{\parskip}{19pt}
-\pagestyle{empty}
-\setlength{\topmargin}{-0.4in}
-\setlength{\textheight}{8.7in}
+% \setlength{\oddsidemargin}{0.0in}
+% \setlength{\textwidth}{6.5in}
+% \setlength{\baselineskip}{19pt}
+% \setlength{\parskip}{19pt}
+% \pagestyle{empty}
+% \setlength{\topmargin}{-0.4in}
+% \setlength{\textheight}{8.7in}
 \usepackage{epsfig}
 \usepackage{amsmath,amssymb,amsthm, graphicx, enumitem, mathrsfs, mathtools, fancyhdr, breqn}
 
@@ -39,7 +39,7 @@
 \newcommand{\A}{\mathscr{A}}
 \newcommand{\PS}{\mathscr{P}}
 \newcommand{\PP}{\mathbb{P}}
-\newcommand{\Mod}[1]{\ (\text{mod}\ #1)}
+\newcommand{\Mod}{\ (\text{mod}\ #1)}
 \usepackage{showkeys}
 %\usepackage{comment}
 \newcommand{\p}{\partial}
@@ -218,223 +218,14 @@ Notes by Dr. Constantin Bacuta, Transcribed by Nicholas Russell
 %
 
 \noindent
-\section*{Chapter 2: Banach Spaces}
-Let $X$  be a vector space over $\K$, where $\K = \R$ or $\C$. 
-\begin{definition}
-A function $d: X \times X \mapsto [0, \infty)$ is said to be a \textbf{metric} if 
-\vtf
-\begin{enumerate}
-\item[(D1)] $d(x, y) \geq 0$, for all $x, y \in X$. 
-\item[(D2)] $d(x, y) = 0$ if and only if $x = y$.
-\item[(D3)] $d(x, y) = d(y, x)$ for all $x, y \in X$.
-\item[(D4)] $d(x, z) \leq d(x, y) + d(y, z)$ for all $x, y, z \in X$. 
-\end{enumerate}
-\end{definition}
-\begin{definition}
-A function $\| \cdot \| : X \to [0, \infty)$ is called a norm if 
-\vtf
-\begin{enumerate}
-\item[(N1)] $\| x \| \geq 0$, for all $x \in X$, $\| x \| = 0$ if and only if $\mx = 0$. 
-\item[(N2)] $\| \lambda x \| = | \lambda | \| x \|$ for all $ \lambda \in \K$, $x \in X$. 
-\item[(N3)] $\| x + y \| \leq \| x \| + \| y \|$ for all $x, y \in X$. 
-\end{enumerate}
-\end{definition}
-\vtf
-We know that the norm induces some distance and thus, we call $(X, \| \cdot \|)$ a \textbf{normed space}. Defined $d(x, y) = \| x - y \|$ for all $x, y \in X$. We can easily check that this satisfies a distance on $X$. 
-We also note the following properties: 
-\begin{enumerate}[topsep=-15pt]
-\item $d(x + z, y + z) = d(x, y)$. This means that $d$ is \textit{invariant under translation}.
-\item $d(\lambda x, \lambda y) = |\lambda| d(x, y)$, which means that $d$ is \textit{positively homogeneous}. 
-\item $B(x, r) = \{ y \in X \mid d(x, y) < r \}$ is a convex set, which means that $x, y \in B$, when $\lambda x + (1 - \lambda) y \in B$ for any $\lambda \in [0, 1]$ We define that $B(x,r)$ to be the \textbf{open ball} centered at $x$ with radius $r$, and we define $\ov{B}(x, r) = \{ y \in X \mid d(x, y) \leq r \}$ to be the \textbf{closed ball} centered at $x$ with radius $r$. 
-\end{enumerate}
-We note that $x \mapsto \| x \|$ is a continuous function since one can prove that $\left| \| x \| - \| y \| \right| \leq \| x - y \|$ and thus, we have continuity since $x_n \to x$ implies that $\| x_n \| \to \| x \|$. 
-\begin{definition}
-A sequence $(x_n)_{n \geq 1} \in X \sse \K$, a normed space, \textbf{converges} to $x_0 \in X$ if 
-\[ \limi \| x_n - x_0 \| = 0.\]
-If $(y_n)_{n \geq 1}  \in X$, then the series $\sumk y_k$ is convergent if $x_n = \suml_{k = 1}^n y_k$ converges to a vector $\mx_0 \in x$, i.e.
-\[ \limi \| (y_1 + y_2 + \cdots + y_n) - \mx_0 \| = 0.\]
-In this case, $\mx_0 = \sumi y_n$ is the \textbf{sum of the series}.
-\end{definition}
-\begin{definition}
-A sequence $\xs \in X$ is a \textbf{Cauchy sequence} if for all $\epsilon > 0$, there exists an $N \in \N$ such that for all $m, n \geq N$, then $\| x_n - x_m \| < \epsilon$. 
-\end{definition}
-\vtf 
-We remark that convergence implies Cauchy, but the opposite is not true in general.
-\begin{definition}
-A normed space $(X, \| \cdot \|)$ is \textbf{complete} (or a \textbf{Banach space}) if every Cauchy sequence is convergent (to an $x \in X$). 
-\end{definition}
-\vtf
-We now present a couple of examples:
-\begin{enumerate}[topsep=-15pt]
-\item On $\R^n$, $x = (x_1, x_2, \cdots, x_n) \in \R^n$, then 
-\[ \| x \| = \| x \|_2 := \sqrt{x_1^2 + x_2^2 + \cdots + x_n^2}.\]
-Let $1 \leq p \leq \infty$ and define 
-\[ \| x \|_p := \left(|x_1|^p + |x_2|^p + \cdots + |x_n|^p  \rp^{\frac{1}{p}} \]
-if $1 \leq q < \infty$ and 
-\[ \| x \|_{\infty} = \max \{ |x_1| , |x_2|, \cdots, |x_n| \}.\]
-We note that if we fix $x \in \R^n$, $\lim\limits_{p \to \infty} \| x \|_p = \| x \|_{\infty}$. We can also show that $\lp \R^n, \| \cdot \|_p \rp$ is a Banach space. 
-\item For infinite sequences ($\ell^p$ spaces, $1 \leq p \leq \infty)$, let $x = (x_1, x_2, \cdots) = \xs$, $x_n \in \R$ (or $\C$). Then, we can denote 
-\[ \| x \|_p = \lp \sumk |x_k|^p \rp^{\frac{1}{p}} \]
-and 
-\[ \|x \|_{\infty} = \sup\limits_{k \geq 1} \{ |x_k| \}.\]
-We will then call the set 
-\[ \ell^p = \{ x = \xs : \| x \|_p < \infty \} = \llb x = \xs : \sumk |x_k|^p < \infty \rrb \]
-\end{enumerate}
-\begin{lemma}
-If $p > 1$, $q > 1$, and $\frac{1}{p} + \frac{1}{q} = 1$, then 
-\[ ab \leq \frac{a^p}{p} + \frac{b^q}{q}.\] (For proof, see P.234 of AB)
-\end{lemma}
-\begin{theorem}
-(\textbf{Holder's Inequality}) If $p, q > 1$, $\frac{1}{p} + \frac{1}{q} = 1$, then 
-\begin{equation}
-\sumi |x_n \cdot y_n| \leq \| x \|_p \| y \|_q 
-\end{equation}
-for all $x \in \ell^{p}$, $y \in \ell^{q}$, where equality holds if and only if there exist $\alpha$ and $\beta$ independent of $n$ such that $\alpha | x_n |^p = \beta | y_n |^q$, where $x = (x_1, x_2, \cdots)$ and $y = (y_1, y_2, \cdots)$. 
-\end{theorem}
-\vtf
-\begin{proof}
-Assume that $x \neq 0$ and $y \neq 0$, and denote $X = \frac{x}{\| x \|_p}$ and $Y = \frac{y}{\|y \|_q}$. Note then that $\|X \|_p = \| Y \|_q = 1$. Dividing (1) by $\| x \|_p \| y \|_q$, we obtain
-\[ \sumi \left| \frac{x_n}{\| x_n \|_p }\frac{y_n}{\|y_n \|_q} \right| \leq 1 \Longrightarrow \sumi | X_n Y_n | \leq 1. \]
-Now, we must have that 
-\begin{align*}
-\sumi |X_n Y_n | & = \sumi |X_n| |Y_n| \\
-& \leq \sumi \lp \frac{1}{p} |X_n|^p + \frac{1}{q} |Y_n|^q \rp \\
-& = \frac{1}{p} \sumi |X_n|^p + \frac{1}{q} \sumi |Y_n|^q \\
-& = \frac{1}{p} \| X\|_p^p  + \frac{1}{q} \| Y \|_q^q \\
-& = \frac{1}{p} + \frac{1}{q} = 1,
-\end{align*}
-there the inequality in line 2 stems from the Lemma 0.1. This proves the formula, and we can see that we have equality if and only if $a^p = b^q$. 
-\end{proof}
-\begin{theorem}
-\textbf{(Minkowski's Theorem}) If $p > 1$, then 
-\begin{equation}
-\| x + y \|_p \leq \| x \|_p + \| y \|_p
-\end{equation}
-for all $x, y \in \ell^p$.
-\end{theorem}
-\vtf
-\begin{proof}
-Assume again that $x \neq 0$ and $y \neq 0$. Assuming without loss of generality that $x_n > 0$ and $y_n > 0$, knowing that if $\frac{1}{p} + \frac{1}{q} = 1$, then $q(p - 1) = p$, and applying (1), we will have that
-\begin{align*}
-\| x + y \|_p^p &  = \sumi |x_n + y_n|^p\\
-& \leq \lp |x_n| + |y_n| \rp^p \\
-& = \sumi (x_n + y_n)^p \\
-& = \sumi x_n( x_n + y_n)^{p-1} + \sumi y_n(x_n + y_n)^{p-1} \\
-& \leq \lp \sumi x_n^p \rp^{\frac{1}{p}} \lp \sumi (x_n + y_n)^{(p-1)q} \rp^{\frac{1}{q}} + \lp \sumi y_n^p \rp^{\frac{1}{p}} \lp \sumi (x_n + y_n)^{(p-1)q} \rp^{\frac{1}{q}} \\
-& =\lp \sumi (x_n + y_n)^p \rp^{\frac{1}{q}} \lp \| x \|_p + \| y\|_p \rp.
-\end{align*}
-So, we will have that 
-\begin{equation}
-\sumi (x_n + y_n)^p \leq \lp \sumi (x_n + y_n)^p \rp^{\frac{1}{q}} \lp \| x \|_p + \| y\|_p \rp
-\end{equation}
-\[ \lp \sumi (x_n + y_n)^p \rp^{1 - \frac{1}{q}} \leq \|x \|_p + \| y \|_p \]
-\[\lp \sumi (x_n + y_n)^p \rp^{\frac{1}{p}} \leq \|x \|_p + \| y \|_p  \]
-\[ \| x + y \|_p \leq \| x \|_p + \| y \|_p.\]
-\end{proof}
-\begin{theorem}
-$\ell^p$ is a Banach space for all $1 \leq p \leq \infty$. 
-\end{theorem}
-\vtf
-\begin{proof}
-We have proven that $\ell^p$ is a normed space, so it just goes to show that it is complete. To this end, let $a^n = \lp a_k^n \rp_{k \geq 1}$ is a Cauchy sequence in $\ell^p$ ($1 \leq p < \infty$). Then, for all $\epsilon > 0$, there exists an $N_0$ such that for all  $m, n \geq N_0$, $\| a^n  - a^m \|_p^p < \epsilon^p$. This implies that 
-\begin{equation}
-|a_k^n - a_k^m|^p \leq \sumk |a_k^n - a_k^m|^p < \epsilon^p.
-\end{equation}
-Thus, for all $\epsilon > 0$, there exists that same $N_0$ (independent of $k$) such that $|a_k^n - a_k^m| < \epsilon$ for all $m, n \geq N_0$. Then, $(a_k^n )_{n \geq 1}$ (fixing $k$) is Cauchy in $\K$, which is complete so $(a_k^n)_{n \geq 1}$ is convergent to $a_k \in \K$ for all $k \in \N$. Let $a = (a_1, a_2, \cdots, a_k ,\cdots)$. Letting $m \to \infty$ in (4), we have that for all $\epsilon >0$, there is that $N_0 \in \N$ such that for all $n \geq N_0$, 
-\begin{equation}
-\sumk | a_k^n - a_k |^p \leq \epsilon^p \Longrightarrow \| a^n - a \|_p^p \leq \epsilon^p.
-\end{equation}
-Choosing $N > N_0$, we have that 
-\[ \| a \|_p \leq \| a^n - a \|_p + \| a^n \|_p < \epsilon^p + \| a^n \|_p < \infty,\]
-which implies that $a \in \ell^p$. Therefore, from (5), we have that $a^n \to a$ in $\ell^p$ because for all $\epsilon > 0$, there is that $N_0$ such that for all $n \geq N_0$, $\| a^n  - a \| \leq \epsilon$. 
-\end{proof}
-\vtf 
-\subsection*{$\ml^p(\Om)$ spaces}
-Let $\Om \sse \R^d$ be open and $1 \leq p < \infty$. Then, we define
-\[ \ml^p(\Om) : = \llb f: \Om \mapsto \R : f \text{ measurable  and } \dint_{\Om} |f(x) |^p < \infty \rrb. \]
-The norm is defined as 
-\[ \| f \|_p = \| f \|_{ml^p(\Om)} = \lp \dint |f|^p \, dx \rp^{\frac{1}{p}}.\]
-Here, we have that $f \equiv g$ if $f = g$ almost everywhere (a.e.). We also define 
-\[
- \ml^{\infty}(\Om) = \{ f: \Om \mapsto \R : \exists M > 0 \text{ s.t. } |f(x)| < M \text{ a.e.} \}, 
- \]
-where 
-\[ 
-\|f\|_{\infty} : = \esssup |f(x)| : = \inf \{ M > 0 :  |f(x)| < M \text{ a.e.}\}.
-  \]
- {\bf  Exercise:} a) Use the $\varepsilon$-characterization of $\inf$ to describe  $\|f\|_{\infty}$. \\
- b) Justify  that if $f \in  \ml^{\infty}(\Om)$, then for any $\varepsilon>0$ the set 
- \[
- \{ x\in \R: |f(x)|>\|f\|_{\infty} - \varepsilon\}
- \]
-  is of positive measure. 
- 
-\begin{theorem}
-$\ml^p(\Om)$ for $1 \leq p \leq \infty$ are Banach spaces.
-\end{theorem}
-\vtf
-A couple of notes on this theorem. The proof is on page 235, you need the Holder and Minkowski's Theorems, and the proof that $\ml^p$ is complete is called the Riesz-Fisher Theorem.  
-\subsection*{Linear Operators}
-Let $X, Y$ be normed spaces over $\K$ (either $\R$ or $\C$).
-\begin{definition}
-A \textbf{linear operator} is a mapping $T: \text{Dom}(T) \in X \mapsto T$ such that 
-\[ T(c_1 x_1 + c_2 x_2) = c_1 T x_1 + c_2 T x_2, \text{ for all } x_1, x_2 \in \text{Dom}(T), c_1, c_2 \in \K.\]
-We also define the \textbf{range} of a function to be
-\[ \text{Range}(T) = R(T) - \{ Tx : x \in \text{Dom}(T) \} \sbs Y.\] 
-We also define the \textbf{null space} or \textbf{kernel}  of $T$ to be $\ker(T) = \{ x \in \text{Dom}(T) : Tx = 0 \}$. We note that $T$ is injective if and only if $\ker(T) = \{ 0 \}$.
-\end{definition}
-\begin{definition}
-Assume that $D(T) = X$ and $T$ is a linear operator from $D(T) = X \mapsto Y$. Then, we say $T$ is \textbf{bounded} if 
-\[ \| T \| = \sup\limits_{\| x \| \leq 1} \| T x\| < \infty. \]
-\end{definition}
-\begin{theorem}
-Suppose $T: X \mapsto Y$ is a linear operator. The following statements are equivalent:
-\begin{enumerate}[topsep=-15pt, itemsep=0pt]
-\item[(a)] $T$ is continuous on $X$
-\item[(b)] $T$ is continuous at $0$
-\item[(c)] $T$ is bounded
-\item[(d)] There exists a $C > 0$ such that $\| Tx \| \leq C \| x \|$ for all $x \in X$. 
-\end{enumerate}
-\end{theorem}
-\vspace{-15pt}
-\begin{proof}
-We will prove that $(a) \Leftrightarrow (b) \Rightarrow (c) \Rightarrow (d) \Rightarrow (b)$. 
-\begin{enumerate}[topsep=-15pt]
-\item[$(a) \Rightarrow (b)$:] This is clear.
-\item[$(b) \Rightarrow (a)$:] Let $x_n \to x \in X$. We need to prove that $Tx_n \to Tx$. To show this, we note that $x_n \to x$ implies that $|x_n - x| \to 0$. Since $T$ is continuous at 0, we have that $T(x_n - x) \to T(0) = 0$, or 
-\[ Tx_n - T_x \to 0 \Longleftrightarrow Tx_n \to Tx \text{ in X }.\]
-\item[$(b) \Rightarrow (c)$:] Assume that $T$ is continuous at 0. We claim that $A = \{ \| Tx \| : \| x \| < 1 \}$ is bounded, and to prove this, we suppose not. Then, for all $n \geq 1$, there exists $x_n \in X$ such that $\| x_n \| \leq 1$ and $\| Tx_n \| \geq n$. Let $y_n = \frac{1}{n} x_n$. Then, we will have that $\| y_n \| = \frac{1}{n} \| x_n \| \leq \frac{1}{n} \to 0$, which implies that $y_n \to 0$. Thus, we must have that $Ty_n \to T(0) = 0$. We also can see that 
-\[ \| Ty_n \| = \left\| T \left(\frac{1}{n} x_n\right) \right\| = \frac{1}{n} \| T x_n \| \geq 1,\]
-but we have that $Ty_n \to 0$, which is a contradiction. Thus, we proved that $A$ is bounded.
-\item[$(c) \Rightarrow (d)$:] Let us assume that $T$ is bounded. Let $M = \sup\limits_{\| x \| \leq 1} \| Tx \| < \infty$. For any $x \in X$, $x \neq 0$, where $x' = \frac{x}{\| x \|}$ satisfies $\| x' \| = 1$, we must have that $\| Tx' \| \leq M$, which means that 
-\[ \left\| T \frac{x}{\| x \|} \right\| \leq M \Longrightarrow \frac{1}{ \|x \|} \| Tx \| \leq M \Longrightarrow \| Tx \| \leq M \| x \|. \]
-\item[$(d) \Rightarrow (b)$:] Assume that there exists a $c > 0$ such that $\| Tx \| \leq c \| x \|$. We need to prove that $x_n \to 0$ implies that $Tx_n \to 0$. Let $x_n \in x$, $x_n \to 0$. Then, we have that $\| T x_n \| \leq c \| x_n \|$ and $\| x_n \| \to 0$. this must imply that $\| Tx_n \| \to 0$ and thus, $Tx_n \to 0$. Thus, $T$ is continuous at 0. 
-\end{enumerate}
-\end{proof}
-\vspace{-25pt}
-We will define $\B(X,Y) : \{ T: X \to Y : T \text{ is a linear, continuous operator} \}$ and is the space of all bounded, linear operators. If $T, T_1, T_2 \in \B(X, Y)$ $\alpha \in \K$, and $x \in X$, then we will have that 
-\[ (T_1 + T_2)x = T_1 x + T_2 x, \hspace{5mm} T(\alpha x) = \alpha T(x), \hspace{5mm} \| T \| = \sup\limits_{\| x \| \leq 1 } \| Tx\|. \]
-\begin{theorem}
-If $X, Y$ are normed spaces over $\K$ and $Y$ is a Banach space, then $\B(X, Y)$ is a Banach space (Theorem 2.12 in book).
-\end{theorem}
-\vspace{-20pt}
-If we have that $Y = \K$, then $\B(X, Y) = \B(X, \K)$ is denoted by $\Xs$, which is the \textbf{dual} of $X$. If, $f \in B(X, \K)$, then $f: X \to \K$ and $f$ is linear. This is called a \textbf{functional}. Then, $\| f \|_{\Xs} = \sup\limits_{\| x \| \leq 1} |f(x)|$. Even though $X$ does not have to be a Banach space, $\Xs$ \textit{is} a Banach space. If $Y = X$, then $\B(X, Y) = \B(X)  = \{ T: X \mapsto X : T \text{ is a linear functional } \}$. Here are a few examples:
-\begin{enumerate}[topsep=-15pt]
-\item Let $x = \{ f: (0, \pi) \mapsto \R : f \text{ continuous, bounded on } (0, \pi) \}$. Then, we have that $\|f \| < \infty$. We define $T: X \mapsto X$ where $Tf = f^{\pr}$. Then, we have that 
-\[ \hspace{-10mm} \text{Dom}(x) = \{ f: (0, \pi) \mapsto \R : f \text{ differentiable, } f^{\pr} \text{ continuous and differentiable on } (0, \pi) \} \subsetneq X.\]
-We note however that $f_n(x) = \sin(nx)$, $x \in (0, \pi) \in \text{Dom}(T)$. Then, $Tf_n(x) = n\cos(nx) \in \text{Dom}(T)$. We note that $\| f_n \| = 1$, and then $\| Tf_n \| = n$. So, we can see that $T$ is not bounded since $\| f_n \| \leq 1$ and   $\|T \| = + \infty$, for $f_n \to f$. 
-\item We can define $\Lambda_+, \Lambda_- : \ell^p \mapsto \ell^p$ as the shift operators, where 
-\[ \Lambda_+(x_1, x_2, \cdots) = (0, x_1, x_2, \cdots)\]
-\[ \Lambda_-(x_1, x_2, \cdots) = (x_2,  x_3, \cdots).\]
-We can find that $\Lambda_+$ is injective but not surjective, and vice-versa for $\Lambda_-$.
-\end{enumerate}
+\input{banach}
 \section*{Finite-Dimensional Normed Spaces}
 \setcounter{equation}{0}
 \begin{lemma}
 Let $X$ be an $N$-dimensional normed space over $\K$. Let $\{ u_1, \cdots, u_N\}$ be a basis for $X$. For any $\alpha \in \R^N$, $\alpha = (\alpha_1, \alpha_2, \cdots, \alpha_N)$, define 
 \[ T\alpha = \alpha_1 u_1 + \alpha_2 u_2 + \cdots + \alpha_N u_N \in X  \]
 (Note that $T: \R^N \mapsto X$). Then, we have that 
-\begin{enumerate}[topsep=-15pt, itemsep=0pt]
+\begin{enumerate}
 \item $T$ is invertible and linear
 \item $T$ is continuous
 \item There exists $c_1, c_2 > 0$ such that 
@@ -449,7 +240,6 @@ c_1 \| T^{-1}x \| \leq \| x \| \leq c_2 \| T^{-1}x \|
 \end{equation}
 for all $x \in X$ (i.e. $T$ is an isomorphism).
 \end{lemma}
-\vspace{-20pt}
 \begin{proof}
 For 1, we know that $T\alpha = 0$ implies that $\alpha = 0$ since $\alpha = \alpha_1 u_1 + \cdots + \alpha_N u_N$ and $\{u_1, u_2, \cdots u_N\}$ is a basis must imply that $\alpha_1 = \cdots = \alpha_N = 0$. Therefore, this implies that $T$ is invertible. \\
 For 3, we can see that 
@@ -474,7 +264,6 @@ for all $x\in X$.
 \begin{cons}
 In any $\fd$ normed space, all norms are equivalent.
 \end{cons}
-\vspace{-25pt}
 \begin{proof}
 Assume that $\dim(X) = N$ and $u_1, \cdots, u_N$ is a basis. Denote $T: \R^N \to X$ as in the above lemma. Then, $(\alpha_1, \cdots, \alpha_N)$ implies that $\alpha_1 u_1 + \cdots + \alpha_N u_N \in X$. Then, if we have $(X, \| \cdot \|_1)$, then the lemma tells us that $a_1, a_2$ such that 
 \[a_1 \| T^{-1} x \|_{\R^N} \leq \| x \|_1 \leq a_2 \| T^{-1} x \|_{\R^N}\]
@@ -487,7 +276,6 @@ which proves that they are equivalent.
 \begin{cons}
 Any $\fd$ normed space is complete. 
 \end{cons}
-\vspace{-25pt}
 \begin{proof}
 Let $(X, \| \cdot \| )$ of dimension $N$. Then, from the lemma, we know that there exist $C_1, C_2$ such that
 \begin{equation}
@@ -500,7 +288,6 @@ as $m, n \to 0$. Then we see that $(T^{-1} x_n)_{n \geq 1} \in \R^N$ is a Cauchy
 \begin{cons}
 Let $(X, \| \cdot \|)$ be a normed space and $B_1 = \overline{B}(0, 1)$. Then, $B_1$ is compact if and only if $X$ is finite dimensional. 
 \end{cons}
-\vspace{-25pt}
 \begin{proof}
 First, assume that $X$ is finite dimensional. Then, using the Lemma, $T: \R^n \to X$ is an isomorphism. Since $B_1$ is closed and bounded and $T^{-1}$ is continuous, then $T^{-1}(B_1)$ is closed and bounded in $\R^n$. By Bolzano-Weierstrass, $T^{-1}(B_1)$ must be compact. Since $B_1 = T(T^{-1}(B_1)$, then we must have that $B_1$ is compact. \\
 For the other direction, we will need to two steps:
@@ -521,31 +308,27 @@ Then, $(\Xs, \| \cdot \|_{\Xs})$ is a Banach space. \\
 We note that $f_a(x) = 0$ implies that $a_1 x_1 + \cdots + a_n x_n = 0$. Thus, we can see that we can represent the dual of $\R^n$ as $\R^n$, or $\left( \R^n \right)^{\star} = \R^n$. 
 \begin{definition}
 Assume that $X$ is a real normed space. Then, $P: X \mapsto \R$ is a convex functional if 
-\begin{enumerate}[topsep=-15pt, itemsep=0pt]
+\begin{enumerate}
 \item[(i)] $p(x + y) \leq p(x) + p(y) $ for all $x, y \in X$;
 \item[(ii)] $p(tx) = tp(x)$ for all $t \in [0, \infty)$ and for all $x \in X$.
 \end{enumerate}
 \end{definition}
-\vspace{-20pt}
 We note that any convex functional must be a convex function.
 \begin{theorem}\textbf{(Hahn-Banach)} 
 Let $X$ be a normed space over $\R$ and let $P: X \mapsto \R$ be a convex functional on $X$. Consider $V \sse X$ subspace and let $f: V \mapsto \R$ be a linear functional such that $f(x) \leq p(x)$ for all $x \in V$. Then, there exists a linear functional $F: X \mapsto \R$ such that 
-\begin{enumerate}[topsep=-15pt, itemsep=0pt]
+\begin{enumerate}
 \item[(i)] $F(x) = f(x)$ for all $x \in V$;
 \item[(ii)] $F(x) \leq p(x)$ for all $x \in X$. 
 \end{enumerate}
 \end{theorem}
-\vspace{-25pt}
 \begin{proof}
 Proof is in the textbook, but the goal is to first extend to $V + \spa\{ x_0 \}$ where $x_0 \not\in V$. Then, we can use the Housdorf Maximum Principle to get the result on $X$. 
 \end{proof}
 \setcounter{cons}{0}
-\vspace{-25pt}
 We now will discuss some different consequences of the Hahn-Banach theorem, now starting with the Extension Theorems.
 \begin{theorem} \textbf{(Extension Theorem: Real Case)}
 Assume that $V \sbs X$ real normed subspace and $f: V\mapsto \R$ is a linear, bounded functional. Then, there exists an $F: X \mapsto \R$ functional such that $F(x) = f(x)$ for all $x \in V$ and $\| F \|_{\Xs} = \| f \|_{V^{\star}}$.
 \end{theorem}
-\vspace{-25pt}
 \begin{proof}
 Let $M = \| f \|_{V^{\star}}$ and define $p: X \mapsto \R$, where $p = m\| x \|$. Note that $p$ is a convex functional and $|f(x)| = \| f \|_{\Vs} \| x \| = m \| x \| = p(x)$ for all $x \in V$. Then by H-B theorem, there exists an $F: X \mapsto \R$ that extends $F$ to $X$ and $F(x) \leq p(x)$ for all $x \in X$. Now, we need to prove that $F$ is bounded and $\| F \|_{\Xs} = \| f \|_{\Vs}$. To do this, we note that $F(x) \leq m \| x \|$ for all $ x \in X$ and we have that $-F(x) = F(-x) \leq m \| -x \|\leq m \| x \|$ for all $x \in X$. Therefore, this implies that $|F(x)| \leq m \| x \|$ for all $x \in X$ and thus, $F$ is bounded ($F \in \Xs$) and $\| F \| \leq \|f \|$. But, 
 \[ \| F \| = \sup\limits_{, x \in X, \| x \| \leq 1} |F(x)| \geq \sup\limits_{, x \in V, \| x \| \leq 1} |F(x)| = \sup\limits_{ x \in V, \| x \| \leq 1} |f(x)|  = \| f \|.\]
@@ -554,7 +337,6 @@ Therefore, $\| F \|_{\Xs} = \| f \|_{\Vs}$.
 \begin{theorem} \textbf{(Extension Theorem: Complex Case)}
 Assume that $V \sbs X$ complex normed subspace and $f: V\mapsto \C$ is a linear, bounded functional. Then, there exists an $F: X \mapsto \C$ functional such that $F(x) = f(x)$ for all $x \in V$ and $\| F \|_{\Xs} = \| f \|_{V^{\star}}$.
 \end{theorem}
-\vspace{-25pt}
 \begin{proof}
 Let $X_{\R}$ be $X$ considered over a vector space of $\R$. Let $u: V_{\R} \mapsto \R$, $u(x) = \Re(f(x))$. Then, 
 \[ |u(x)|_{X_{\R}^{\star}} = |\Re(f(x))| \leq |f(x)| \leq \| f \|_{\Vs} \cdot \| x \|\]
@@ -564,7 +346,6 @@ Define $F(x) = u(x) - i u(ix)$ for all $x \in X$. Then, this map satisfies all o
 \end{proof}
 \begin{proposition}\textbf{(Separation of Points)} If $(X, \| \cdot \|)$ is a normed space and $x \neq y$, then there exists an $F \in \Xs$ such that $F(x) \neq F(y)$.
 \end{proposition}
-\vspace{-25pt}
 \begin{proof}
 Let $V = \spa\{ x - y\}$ supposing that $x \neq y$. Then, define $f: V \mapsto \K$ where $f(t(x-y)) = t$ for all $t \in \K$. Note that $f(x-y) = 1$, which implies that $f(x) - f(y) = 1$ and thus, $f(x) \neq f(y)$. Now, we also note that 
 \[\frac{|f(t(x-y))|}{\| t(x-y)\|} = \frac{|t|}{|t| \| x - y \|} = \frac{1}{\| x - y\|} > 0 \]
@@ -572,9 +353,8 @@ for all $x \neq y \in X$. Therefore,
 \[ \| f \|_{\Vs} = \sup\limits_{\| f \| \neq 0} \frac{\| f(t(x-y))\|}{t \| x - y\|} = \frac{1}{\| x- y\|},\]
 which implies that $f$ is bounded. Thus, by the extension theorem, there exists an $F: X \mapsto \K$ such that $F(z) = f(z)$ for all $z \in X$ and $\| F\| = \| f \| = \frac{1}{\| x - y\|} < \infty$. Therefore, $F \in \Xs$ and $F(x) \neq F(y)$. 
 \end{proof}
-\vspace{-25pt}
 We note that if $(X, \| \cdot \|)$ is a normed space, Proposition 1 has the following conseuqences:
-\begin{enumerate}[topsep=-15pt, itemsep=0pt]
+\begin{enumerate}
 \item[(i)] $\phi(x) = \phi(y)$ for all $\phi \in \Xs$ implies that $x = y$;
 \item[(ii)] $\phi(x) = 0$ for all $x \in \Xs$ implies that $x = 0$;
 \item[(iii)] For all $x \in X$, $x \neq 0$, there exists a $\phi \in \Xs$ such that $\phi(x) \neq 0$.
@@ -584,851 +364,8 @@ Let $\ns$ be a Banach space and $x_0 \in X$, $x_0 \neq 0$. Then, there exists a 
 \end{proposition}
 \begin{proposition} \textbf{(Separating a point from a convex set)} Let $\ns$ be a real normed space. If $\Om \sbs X$ is an open, convex set containing $\mathbf{0}$ and $x_0 \not\in \Om$, then there exists an $F \in \Xs$ such that $F(x) < 1 \leq F(x_0)$ for all $x \in \Om$.
 \end{proposition}
-\vspace{-25pt}
 \begin{proof}
-Define $p: X \mapsto [0, \infty)$ by $p(x) = \inf \{ \lambda \geq 0 : x \in \lambda \Om \}$ ($\lambda$ expands or contracts the size of $\Om$). We can show that $p$ is a convex functional. Note that if $x_0 \in \Om$, then $p(x) < 1$ and $x_1 \not\in \Om$, then $p(x) \geq 1$. Now, define $f: \{ t x_0 : t \in \R\} \mapsto \R$ such that $f(t x_0) = t$ for all $t$. It is clear that $f$ is linear and since $p(tx_0) = t p(x_0)$ for $t \geq 0$, we have that 
-\[ f(tx_0) = t \leq tp(x_0) = p(t x_0) \]
-if $t \geq 0$. If $t < 0$, then $f(t x_0) = t \leq p(t x_0)$. Therefore, $f(tx_0) \leq p(t x_0)$ for all $t$ and $x_0 \in V$. Then, by HB Theorem, there exists an $F: X \mapsto \R$ such that $F\vert_V = f$ and $F(x) \leq p(x)$ for all $x \in X$. For $x \in \Om$, we have that $F(x) \leq p(x) \leq 1 = F(x_0)$. Thus, we have that $F(x_0) = f(x_0) = 1$. 
-\end{proof} 
-\begin{proposition}\textbf{(Separation of a point from a subspace)}
-Let $\ns$ be a real normed space and $V$ is a closed subspace of $X$, $x_0 \not\in V$. Then, there exists an $F \in \Xs$ such that $F(x_0) \neq 0$ and $F(x) = 0$ for all $x \in V$. 
-\end{proposition}
-\vspace{-25pt}
-\begin{proof}
-Define $f: V + \spa\{ x_0 \} \mapsto \R$ where $f(x + \lambda x_0) = \lambda$ for all $x \in V$ and all $\lambda \in \R$. Then, we have that 
-\begin{align*}
-\| f \|_{V + \spa\{ x_0 \}} & = \sup\limits_{x \in V, |\lambda| \neq 0} \frac{\| f(x + \lambda x_0)\|}{\| x + \lambda x_0 \|} \\
-& = \sup\limits_{x \in V, |\lambda| \neq 0} \frac{|\lambda|}{\| x + \lambda x_0 \|} \\
-& = \sup\limits_{x \in V, |\lambda| \neq 0} \frac{1}{\| \frac{1}{\lambda} x +x_0\|} \\
-& = \frac{1}{\inf\limits_{y =-(1/\lambda)\,  x \in V} \| x_0 -y \|}\\
-& = \frac{1}{d(x_0, V)} > 0.
-\end{align*}
-Therefore, $f$ is continuous on $V + \spa\{ x_0 \}$ and thus, we can apply the extension theorem and have our completed proof. 
-\end{proof}
-\subsection*{Dual Spaces and Weak Convergence}
-Let $\ns$ be a normed space and $\Xs = \{ \phi : X \mapsto \K : \phi \text{ linear and bounded } \}$. For $\phi \in \Xs$, $\| \phi \| = \| \phi \|_{\Xs} = \sup\limits_{\| x \| \leq 1} |\phi(x) |$. Note that since $\K$ is complete, then $(\Xs, \| \cdot \|_{\star})$ is a Banach space even if $X$ is not. 
-\begin{theorem}
-If $f \in \left( \R^n, \| \cdot \| \right)^{\star}$, then there exists an $a \in \R^n$ such that 
-\[ f(x) = \suml_{k =1}^n x_k a_k,\]
-for all $x = \{ x_1, \cdots, x_n \} \in \R^n$ and $\| f \|_{\lp\R^n\rp^{\star}} = \| a \|$. 
-\end{theorem}
-\vspace{-25pt}
-\begin{proof}
-Let $e_1, \cdots, e_n$ be the canonical basis of $\R^n$, where $e_k$ is the 0 vector, but has a 1 in the $k$-th component. Let $x \in \R^n$, $x = (x_1, \cdots, x_n)$, and thus, 
-\[ x = \suml_{k = 1}^n x_k e_k. \]
-Let $f \in \lp \R^n, \| \cdot \| \rp^{\star}$. Then 
-\[ f(x) = f \lp \suml_{k = 1}^n x_k e_k \rp = \suml_{k= 1}^n x_k f(e_k) = \suml_{k= 1}^n x_k a_k. \]
-Then, 
-\[ |f(x) = \left| \suml_{k= 1}^n x_k a_k \right| \leq \suml_{k= 1}^n \left| x_k a_k \right| \leq \lp \suml_{k= 1}^n |x_k|^2 \rp^{\frac{1}{2}} \lp \suml_{k= 1}^n |a_k|^2 \rp^{\frac{1}{2}}. \]
-Therefore, we have that $|f(x)| \leq \| a \| \| x\|$ for all $x \in \R^n$. Therefore we must have that $\| f \| \leq \| a \|$. Then, 
-\[f(a) = \suml_{k = 1}^n a_k^2 = \| a \|^2 \Longrightarrow \frac{|f(a)|}{\| a \|} = \| a\|. \]
-Therefore, we can see that 
-\[ \| f \| = \sup\limits_{x \neq 0} \frac{|f(x)|}{\| x \|} \geq \frac{|f(a)|}{\| a \|} = \| a \|.\]
-Therefore, we have that $\| f \| = \| a \|$. Thus, $\lp \R^n, \| \cdot \|\rp^{\star} = \lp \R^n, \| \cdot \|\rp$.
-\end{proof}
-\begin{theorem}
-Let $1 < p < \infty$. 
-\begin{enumerate}[topsep=-15pt, itemsep=0pt]
-\item If $f \in \lp \ell^p \rp^{\star}$, then there must exist a unique $z \in \ell^q$ (where $\frac{1}{p} + \frac{1}{q} = 1$) such that if $x = (x_1, x_2, \cdots) \in \ell^p$, then 
-\[ f(x) = \sumk x_k z_k, \hspace{5mm} \text{ and } \hspace{5mm} \| f\| = \| z \|_q.\]
-In other words, $\lp \ell^p \rp^{\star} = \ell^q$. 
-\item If $f \in \lp \ml^p(\Om) \rp^{\star}$, then there exists a unique $\ml^q(\Om)$ (where $\frac{1}{p} + \frac{1}{q} = 1$) such that 
-\[ F(f) = \dint_{\Om} f(x) \, G(x)\, dx \]
-for all $f \in \ml^p(\Om)$ and $\| F \| = \| G \|_{\ml^q(\Om)}$. Therefore, $\lp \ml^p(\Om) \rp^{\star} = \ml^q(\Om)$. 
-\end{enumerate}
-\end{theorem}
-\vspace{-25pt}
-Let $\ns$ be a Banach space and $(x_n)_{n \geq 1} \sbs X$. Then, $(x_n)$ is bounded in $X$ if $\| x_n \| \leq M$ for all $n \geq 1$ for some $M >0$. We say that $x_n$ \textbf{converges strongly} to $x$ if $\| x_n - x \| \to 0$. If $x_n \to x$, we know that the milit is unique and $x_n$ is bounded. We say that $(x_n) \in X$ is \textbf{weakly convergent} to $x \in X$ if $\phi(x_n) \to \phi(x)$ for all $\phi \in \Xs$ (this is convergence in $\K$). We consider $x$ the \textbf{weak limit} of $(x_n)$ and we write $x_n \rightharpoonup x$. We note that strong convergence implies weak convergence because if $x_n \to x$ and $\phi \in \Xs$, then we have that 
-\[|\phi(x_n) - \phi(x) | = \| \phi(x_n - x)\| \leq \| \phi\| \| x_n - x \| \to 0\]
-as $n \to \infty$. The reverse is not always true. For example, let $X = \ell^2(\N)$ and let $\{ e_n \}$ be the canonical basis. Then, $e_n \rightharpoonup 0$ but $\| e_n \| = 1$, so it cannot converge strongly. \\
-\indent We can also show that the weak limit is unique. Indeed, if $x_n \weak x$ and $x_n \weak y$ in $X$, then $\phi(x_n) \to \phi(x)$ and $\phi(x_n) \to \phi(y)$ in $\K$ (for any $\phi \in \Xs$). In $\K$, the limit is unique and thus, $\phi(x) = \phi(y)$ for all $\phi \in \Xs$. By Consequence 2 of HB, we have that $x = y$. 
-\subsection*{Weak $\star$ Convergence}
-\vspace{-25pt}
-The dual of $\Xs$ is $\lp \Xs \rp^{\star} = \Xss$, the \textbf{bidual} of $X$. Then, 
-\[ \Xss = \{ F: \Xs \mapsto X : F \text{ linear and bounded on } \Xs \}.\]
-Any $x \in X$ induces an element of $\Xss$. Denote $F_x: \Xss \mapsto \K$ as $F_x(\phi) = \phi(x)$ for all $\phi \in \Xs$. Then, 
-\[ \| F_x \|_{\Xss} = \sup\limits_{\| \phi\| \leq 1} \| F_x(\phi)\| =  \sup\limits_{\| \phi\| \leq 1} \| \phi(x)\| \leq  \sup\limits_{\| \phi\| \leq 1} \| \phi \| \| x \| = \| x \|.\]
-Therefore, we have that $F_x \in \Xss$. Using Proposition 2, for a fixed $x \in X$, there exists a $\phi \in \Xss$ such that $\phi_x = \| x \|$ and $\| \phi_x\| = 1$. Then, 
-\[ \| F_x \| = \sup\limits_{\| \phi \| \neq 0 } \frac{|F_x(\phi)|}{\| \phi\|} \geq \frac{|F_x(\phi_x)|}{\| \phi_x\|} = \frac{\phi_x(x)}{\| \phi_x \|} = \| x \|.\]
-Therefore, we have that $\| F_x \|_{\Xss} = \| x \|$. Then, we have a canonical embedding $i: X \mapsto \Xss$, $x \mapsto F_x = x$. and $\| ix \| = \| Fx \| = \| x \|$. Thus, they preserve norms. We identify $X$ with $iX \sbs \Xss$. Every Banach space is isometrically embedded in its bidual. If $\Xss = i X$ ($i$ is onto), we say that $X$ is \textbf{reflexive} which means that $X$ is isomorphic with its bidual.\\
- For example, take $1 < p < \infty$. Then, $X = \ml^p(\Om)$ implies that $\Xs = \ml^q(\Om)$ and then, $\Xss = \ml^p(\Om)$ and similarly, $X = \ell^p, \Xs = \ell^q, \Xss = \ell^p$. We note that $\ml^1$ and $\ell^1$ are not reflexive. However, we have that $\lp \ml^1(\Om) \rp^{\star} = \ml^{\infty} (\Om)$ and $\lp \ell^1 \rp^{\star} = \ell^{\infty}$. 
- \begin{definition}
- We say that $\{ \phi_n\}_{(n \geq 1)} \bs \Xs$ is \textbf{weak $\star$ convergent} to $\phi \in \Xs$ if $F_x(\phi_n) \to F_x(\phi)$ for all $x \in X$, i.e. $\phi_n(x) \to \phi(x)$ for all $x \in X$. Notationally, $\phi_n \weaks \phi$ if $F(\phi_n) \to F(\phi)$ for all $F \in \Xss$. 
- \end{definition}
- \vspace{-25pt}
- We must note that strong convergence of $\phi_n$ to $\phi$ in $\Xs$ was 
- \[ \| \phi_n - \phi \|_{\Xs} \to 0 \Longrightarrow \sup\limits_{\| x \| \leq 1} |\phi_n(x) - \phi(x) | \to 0 \text{ as } n \to \infty.\]
- But, we have that 
- \[ \phi_n \weaks \phi \Longrightarrow | \phi_n(x) - \phi(x) | \to 0 \text{ as } n \to \infty \text{ for all } x \in X. \] 
- We note that strong convergence does imply weak $\star$ convergence. Before we state the next theorem, we know that if $\Xs$ is infinite dimensional, then $B_1$ is not compact. This implies that there is no strongly convergent subsequence. 
- \begin{theorem} \textbf{(Banach-Alaoglu Theorem)}
- Let $X$ be a Banach space. Then, every bounded sequence $\lp \phi_n\rp \in \Xs$ admits a weak $\star$ convergent subsequence.
- \end{theorem}
- \vspace{-25pt}
- We note that the theorem does not apply to $\ns$ on the weak convergence. In general, a bounded sequence in $\ns$ does not have a weakly convergent subsequence. 
- \section*{Chapter 4: Bounded Linear Operators}
- \setcounter{theorem}{0}
- \setcounter{proposition}{0}
-  \setcounter{definition}{0}
- \setcounter{corollary}{0}
- \setcounter{cons}{0}
- \setcounter{equation}{0}
-
- Let $X, Y$ be normed spaces, and we define $\B(X, Y) = \{ T: X \to Y : T \text{ linear, bounded } \}$. We can find that $\B$ is a vector space and that 
- \[ (T_1 + T_2) x = T_1x + T_2 x, \hspace{5mm} (\alpha T)x = \alpha Tx, \hspace{5mm} \| T \| = \sup\limits_{\| x \| \leq 1} \| Tx \|,\]
- where $T_1, T_2 \in \B(X, Y)$, $\alpha \in \K$ and $x \in X$. We can see that (N1) - (N3), the axioms for the norms, are satisfies for $\| \cdot \|$. We also do know that if $Y$ is Banach, then $\B(X, Y)$ is Banach. Also, $\Xs = \B(X, \K)$ is Banach. 
- \begin{theorem} (\textbf{Banach- Steinhous or Uniform Boundness Principle (UBP))}
- Assume that $X, Y$ are Banach spaces and let $\F \sbs \B(X, Y)$ is a family of bounded, linear operators. Then, either 
- \begin{enumerate}[topsep=-15pt, itemsep=0pt]
- \item[(a)] $\F$ is bounded, i.e. $\sup\limits_{T \in \F} \| T \| < \infty$, or
- \item[(b)] there exists a dense subset $S \sbs X$ such that 
- $\sup\limits_{T \in \F} \| T x \| = \infty$ for all $x \in X$.  
- \end{enumerate}
- \end{theorem}
- \vspace{-25pt}
- \begin{proof}
- For any $n \geq 1$, define 
- \[ S_n = \{ x \in X : \| T_x \| > n \text{ for some } T in \F \} = \bigcap\limits_{T \in \F} \{ x \in X : \| Tx \| > n\}.\]
- Since $\{ x \in X : \| Tx \| > n\}$ is open, we have that $S_n$ is open. Therefore, we either have that 
- \begin{enumerate}[topsep=-15pt, itemsep=0pt]
-\item[(1)] there exists an $n_0 \geq 1$ such that $S_{n_0}$ is \textit{not} dense in $X$, or 
-\item[(2)] $S_n$ is dense in $X$ for all $n \geq 1$. 
- \end{enumerate}
- Assume that (1) is true. Then, $S_{n_0}$ is not dense in $X$, which implies that there exists an $x_0 \in X$, $r > 0$ such that $\overline{B}(x_0, r) \cap S_{n_0} = \varnothing$. Thus, this implies that $\overline{B}(x_0, r) \in S_{n_0}^c$. This means that 
- \begin{equation}
- \| x - x_0 \| \leq r \Longrightarrow \| Tx \| \leq n_0, \text{ for all } T \in \F. 
- \end{equation}
- For $y \in \overline{B}(0, r)$, we have that $y = y + x_0 - x_0$. Noting that $y + x_0 \in \overline{B}(x_0, r)$, we will have that 
- $\| T(y + x_0 ) \| \leq n_0$. As well, we see that $Ty = T(y + x_0) - T(x_0)$. Therefore, we see 
- \[ \| Ty \| \leq \| T(y + x_0) \| + \| Tx_0\| \leq n_0 + \| T x_0 \|,\]
- for all $y \in \overline{B}(0, r)$. Thus, for all $T \in \F$, we can see that 
- \begin{align*}
- \| T \| = \sup\limits_{\| z \| \leq 1} \| Tz \| \leq \sup\limits_{\| y \leq r \|} \| T(\frac{1}{r}) y \| = \frac{1}{r} \sup\limits_{\| y \leq r \|} \| T y \| \leq \frac{1}{r} (n_0 + \| T x_0 \|) \leq \frac{1}{r} (n_0 + n_0) = \frac{2 n_0}{r}.
- \end{align*}
- Since this is true for all $T \in \F$, we have that this family is uniformly bounded, proving that (a) occurs.\\ 
- \indent Now, assume case (b). By Baire's Category Theorem (see Page 221)), $S = \bigcap\limits_{n =1}^{\infty} S_n$ is also dense in $X$. As well, we see that 
- \[S = \bigcap\limits_{n =1}^{\infty} S_n = \bigcap\limits_{n =1}^{\infty} \{ x \in X : \exists T \in \F \text{ such that } \| Tx \| > n \} \]
- Thus, for all $x \in S$, we have that $\sup\limits_{T \in \F} \| Tx \| =  + \infty$. Thus, this proves (b). 
- \end{proof}
- \begin{remark}
- A direct consequence of $B -C$ is that if 
- \begin{equation}
- \sup\limits_{T \in \F} \| Tx \| < + \infty \hspace{4mm} \text{ for all } x \in X,
- \end{equation}
- then, we must have that 
- \begin{equation}
-  \sup\limits_{T \in \F} \| T \|=  \sup\limits_{T \in \F} \sup\limits_{\| x \| \leq 1} \| Tx \| < \infty.
- \end{equation}
- Indeed, if $(1)$ holds, then (b) in the B-S Theorem \textbf{cannot} hold. Thus, (a) holds if $(1)$ holds.
- \end{remark}
- \begin{corollary}
- \textbf{(Continuity of Pointwise Limit Operators)} If $\lp T_n \rp_{n \geq 1} \sbs \B(X, Y)$, where $X, Y$ Banach and $\lim\limits_{n \to \infty} T_n(x) = T(x)$ for all $x \in X$, then $T$ is linear and bounded, i.e. $T \in \B(X, Y)$. 
- \end{corollary}
- \vspace{-25pt}
- \begin{proof}
- Proving that $T$ is linear is very quick (using definition of limits). Now, since $\lim\limits_{n \to \infty} T_n(x) = T(x)$ for all $x \in X$, we have that 
- \[\sup\limits_{(T_n)_{n \geq 1}} \| T_n x\| < \infty  \]
- for all $x \in X$. From the above remark and letting $\F = \{ T_n : n \geq 1\}$, we have that $\sup\limits_{n \geq 1} \| T_n \| < \infty$. Since $T_n(x) \to T(x)$, then $\|T_n(x) \| \to \| Tx \|$ (because norms are continuous). Then, we have that 
- \begin{align*}
- \| T \| = \sup\limits_{\| x \| \leq 1} \| Tx \| & = \sup\limits_{\| x \| \leq 1}  \lp \lim\limits_{ n \to \infty} \| T_n x \| \rp \\
- & \leq  \sup\limits_{\| x \| \leq 1}  \lp \limsup\limits_{ n \to \infty} \| T_n \| \| x \| \rp\\
- & \leq  \sup\limits_{\| x \| \leq 1}  \| T_n \| < + \infty.
- \end{align*}
- Therefore, we have that $\|T \| < + \infty$. 
- \end{proof}
- \vspace{-25pt}
- Note that this does \textbf{not} imply that $\| T_n - T \| \to 0$. 
- \subsection*{Open Mapping Theorem}
- Let $T: X \mapsto Y$ be a linear operator, and $T$ bijective. Then $T^{-1}: Y \mapsto X$ is also linear. If $y_1, y_2 \in X$, then there exist unique $x_1, x_2$ such that $T(x_1) = y_1$ and $T(x_2) = y_2$. Then, if $a_1, a_2 \in \K$ we have that 
- \begin{align*}
- T^{-1}(a_1 y_1 + a_2 y_2) & = T^{-1}(a_1 Tx_1 + a_2 Tx_2) \\
- & = T^{-1}(T(a_1 x_1 + a_2 x_2))\\
- & = a_1 x_1 + a_2 x_2 \\
- & = a_1 T^{-1}y_1 + a_2 T^{-1}y_2.
- \end{align*}
- Thus, proving linearity. Now, we could ask the question: If $T: X \mapsto Y$ is linear and bounded, is $T^{-1}$ bounded? The answer is yes if $X, Y$ are Banach. 
- \begin{theorem} (\textbf{Open Mapping Theorem})
-Let $X, Y$ be Banach spaces, $T \in \B(X, Y)$ be a surjective operator. Then, $T$ is an open map ($U$ open in $X$ implies that $T(U)$ is open in $Y$). 
- \end{theorem}
- \begin{cons}
- If $T \in \B(X, Y)$ with $X, Y$ Banach spaces, then $T$ invertible implies that $T^{-1}$ is also bounded.
- \end{cons}
-\vspace{-25pt}
- \begin{proof}
- We need to prove that $\lp T^{-1} \rp^{-1} (U)$ is open in $Y$ for any open $U$ in $X$. Since $T$ is bijective, we know that $\lp T^{-1} \rp^{-1} (U) = T(U)$. Then, by the Open Mapping Theorem (OMT) and the fact that $U$ is open, we then have that $T(U)$ is open in $Y$.
- \end{proof}
- \vspace{-25pt}
- If $T \in \B(X, Y)$ where $X, Y$ are Banach and $T$ is invertible, then $T^{-1}$ being bounded implies that $\| T^{-1} y \| \leq C \| y \|$ for all $y \in Y$. If we denote $T^{-1} y = x$, then we can see that 
- \[ \| Tx \| \geq \frac{1}{C} \| x \| \hspace{5mm} \text{ for all } x \in X.\]
- Therefore, we can see that 
- \[\inf\limits_{\| x \| \neq 0} \frac{\| Tx \|}{\| x \|} \geq \frac{1}{C} \geq 0. \]
- \subsection*{Closed Graph Theorem}
- Assume that $X, Y$ are Banach spaces. We say define the cross product of $X$ and $Y$ as 
- \[ X \times Y = \{ (x, y) : x \in X, y \in Y\}. \]
- One can show that this is a vectored normed space where 
- \[ (x_1, y_1) + (x_2, y_2) = (x_1  + x_2, y_1 + y_2)\]
- \[ \alpha(x_1, y_1) = (\alpha x_1, \alpha y_1)\]
- \[ \| (x, y)\| = \| x \| + \|y \|.\]
- In addition, $(x_n, y_n ) \to (x, y)$ if and only if $x_n \to x$ and $y_n \to y$. We can prove that if $X, Y$ are Banach, then $X \times Y$ is Banach. For any $T: X \mapsto Y$ where $T$ is a linear operator, we define the graph of $T$, $G(T)$ as 
- \[ G(T) = \{ (x, Tx) : x \in X \} \sse X \times Y.\]
- \begin{definition}
- We say that $T$ is a \textbf{closed operator} if $G(T)$ is a closed subspace of $X \times Y$. 
-\end{definition}
-\begin{theorem}
-(\textbf{Closed Graph Theorem}) If $X, Y$ are Banach spaces and $T: X \mapsto Y$ is a linear operator, then $T$ is bounded if and only if $T$ is closed. 
-\end{theorem}
-\vspace{-25pt}
-\begin{proof}
-First, we assume that $T$ is bounded. Let $(Tx_n) \in G(T)$ and $(x_n , Tx_n) \to (x, y)$ in $X \times Y$. Then, we have that $x_n \to x$ and $T x_n \to y$. As well, since $T$ is continuous, we also have that $Tx_n \to T_x$. Therefore, by the uniqueness of limits, we have that $Tx = y$ and thus $(x, y) = (x, Tx) \in G(T)$. Thus, $G(T)$ is closed. \\
-\indent Now, assume that $G(T)$ is a closed subspace of $X \times Y$, which is Banach. This implies that $G(T)$ is Banach. Define $\pi_1: G(T) \mapsto X$ and $\pi_2: G(T) \mapsto Y$ where $\pi_1((x, Tx)) = x$ and $\pi_2((x, T_x)) = Tx$. We can see that $\pi_1, \pi_2$ are linear operators and are bounded as well. But, since $\pi_1$ is bijective, the open mapping theorem tells us that $\pi_1^{-1}$ is also continuous. Noting that $Tx = (\pi_2 \circ \pi_1^{-1})(x)$ and since $\pi_1^{-1}$ and $\pi_2$ are continuous, then $T$ is continuous. Therefore, $T$ is bounded. 
-\end{proof}
-\begin{definition}
-Let $X, Y$ be normed spaces and $T: X \mapsto Y$ be a linear map.
-\begin{enumerate}[topsep=-15pt, itemsep=0pt]
-\item $T$ is an \textbf{isomorphism} is $T$ is a bijection (one-to-one and onto) and $T, T^{-1}$ are continuous. 
-\item $T$ is an \textbf{isometry} if $\| Tx \| = \| x \|$ for all $x \in X$. 
-\item $T$ is an \textbf{isometric isomorphism} if $T$ is both an isomorphism and an isometry. 
-\end{enumerate}
-\end{definition}
-\vspace{-25pt}
-We note a couple of properties:
-\begin{enumerate}[topsep=-15pt, itemsep=0pt]
-\item $T$ being an isometry implies that $\| T \| = 1$. 
-\item If $T$ is an isometric isomorphism, then $\| T \| = \| T^{-1} \| = 1$. 
-\item If $T$ is a surjective isometry, then $T$ is an isometric isomorphism (since $\| Tx \| = \| x \|$ implies that $T$ is injective).
-\end{enumerate}
-As an example, we let $X$ be a Banach space and denote 
-\[ \Xs = \{ \xst: X \mapsto \R : \xst \text{ linear and bounded on } X \}. \]
-Then, we have that $\| \xst \| = \sup\limits_{\| x \| \leq 1} \| \xst (x) \|$. Any $x \in X$ induces $Fx \in (\Xs)^{\star} = \Xss$, where $F_x(\xst) = \xst (x)$. We proved that $\| F_x \| = \| x \|$. Thus, $F$ is an isometry. If $X$ is reflexive, then $F$ is an isometric isomorphism. 
-\begin{theorem}\textbf{(Weakly convergent sequences are bounded in Banach Spaces)} Let $X$ be a Banach Space. Then $x_n \weak x$ implies that $\{ x_n \}_{n=1}^{\infty}$ is bounded.
-\end{theorem}
-\vspace{-25pt}
-\begin{proof}
-Let $\Xs$ be the dual of $X$ and let $(x_n){n \geq 1}$ be such that $x_n \weak x$. For each $x_n$, we consider $F_{x_n}$, where $F_{x_n}: \Xs \mapsto \K$. Then, $(F_{x_n})$ is a sequence of functionals on $\Xs$ and $(F_{x_n}) sse \B(\Xs, \K) = \Xss$. Thus, we can claim that $F_{x_n}(\phi) \to F_x(\phi)$ for all $\phi \in \Xs$. This is equivalent to saying $\phi(x_n) \to \phi(x)$ for all $\phi$ and thus, $x_n \to x$. So, for all $\phi$, 
-\[ F_{x_n}(\phi) \weak F_x(\phi) \Longleftrightarrow \phi(x_n) = \phi(x) \Longleftrightarrow x_n \to x.\]
-Thus, $\sup\limits_{n \geq 1} | F_{x_n}(\phi) | < + \infty$ for all $\phi \in \Xs$. Using the UBD for $X = \Xs$ and $Y = \K$, we see that (b) cannot hold and thus, (a) holds. Thus, $\sup\limits_{n} \| F_{x_n} \| < + \infty$ implies that $\sup\limits_{n} \| x_n \| < +\infty$. Therefore, $(x_n)$ is bounded. 
-\end{proof}
-\subsubsection*{Another Application of OMT}
-\setcounter{equation}{0}
-Suppose $T: X \mapsto Y$, $T \in \B(X, Y)$ and assume $N(A) = \ker(A) = \{ 0\}$, $R(T) = \{ Tx : x \in X\} \sse Y$ is a subspace. Then $T^{-1}$ is defined in $(R(T), \| \cdot \|_Y)$ and thus, $T^{-1}: R(T) \mapsto X$. If $R(T)$ is closed in $Y$ and $Y$ is a Banach space, then $R(T)$ is also Banach. If in addition $X$ is Banach, then by consequence 1  of OMT, we get that $T^{-1}: R(T) \mapsto X$ is also bounded. Thus, there exists a $c > 0$ such that $\| T^{-1} y \|_{X} \leq c \| y\|_Y$ for all $y \in R(T)$. If we denote $T^{-1}y - x$, then 
-\begin{equation}
-\| x \|_X \leq c \| Tx \| \hspace{4mm} \text{ for all } x \in X.
-\end{equation}
-This condition implies that $T$ is injective and that $R(T)$ is closed in $Y$ (if $X, Y$ are Banach). Indeed, let $(y_n) \sbs R(T)$, $y_n \to y \in Y$. Thus, $y_n = Tx_n$ for some $x_n \in X$ and $y_n$ is Cauchy in $X$. Then, $\| y_n - y_m \| = \| T x_n - Tx_m \| \to 0$ as $m, n \to + \infty$. Then, $(x_n)$ is Cauchy in $X$, which is Banach, so that implies that $x_n \to x \in X$. Since $T$ is bounded, then $T x_n \to Tx$. Thus, $y = Tx \in R(T)$ and this proves that $R(T)$ is closed. 
-\begin{theorem}
-Let $X, Y$ be Banach spaces and $T \in \B(X,Y)$. Then, there exists a $c >0 $ such that $\| Tx \| \geq c \| x \|$ if and only if $T$ is injective and $R(T)$ is closed in $Y$. 
-\end{theorem}
-\subsection*{4.4: Adjoint Operators}
-Let $X$ be a Banach space and $\Xs = \{ \xst : \xst \text{ is a bounded, linear functional on } X \}$. For $x \in X$, we take $F_x \in \Xss$. Then, we know that 
-\[ \| F_x \| = \| x \| = \sup\limits_{\| \xst \| \leq 1, \xst \in \Xs} |\xst(x)|.\]
-Since the spaces $\Xs$ and $X$ play a symmetric role, we define $\la \xst, x \ra_{\Xs \times X} = \xst(x)$, where $\la \cdot, \cdot \ra_{\Xs \times X}$ is the \textbf{duality pair}. We need to get used to seeing 
-\[ \| \xst \| = \sup\frac{|\la \xst, x \ra_{\Xs \times X}|}{\| x \|} \]
-\[|\la \xst, x \ra_{\Xs \times X}| \leq \| \xst \| \| x \|. \]
-Let $X, Y$ be Banach spaces and $T \in \B(X, Y)$. Then, $T: X \mapsto Y$. We can also define $y^{\star}: Y \mapsto \K$ and thus, we have that $y^{\star} \circ T: X \mapsto \K$. We define $T^{\star}: \Ys \mapsto \Xs$. For any $\ys \in \Ys$, define $\xs: X \mapsto \K$ where $\xs = \ys \circ T= \ys T$. Then, $(\Ts \ys)(x) = (\ys T)(x)$ for all $x \in X$, or 
-\[ \la \Ts \ys, x \ra_{\Xs \times X} = \la \ys, Tx \ra_{\Ys \times Y} \in \Xs. \]
-\begin{theorem}
-If $T \in \B(X, Y)$, then $\Ts \in B(\Ys, \Xs)$ and $\| T \| = \| \Ts \|$. 
-\end{theorem}
-\vspace{-25pt}
-\begin{proof}
-Note that 
-\begin{align*}
-\| \Ts \| & = \sup \{ \| \Ts \ys \| : \| ys \| \leq 1\} \\
-&  = \sup \{ | \la \Ts \ys, x \ra|: \| x \| \leq 1, \| ys \| \leq 1\}\\
-& = \sup \{ | \la \ys, Tx \ra|: \| x \| \leq 1, \| ys \| \leq 1\}\\
-&  = \sup \{\| Tx \|, \| x \| \leq 1\}\\
-& = \| T \| < \infty. 
-\end{align*}
-Therefore, $\| \Ts \| < \infty$, $\| \Ts \| = \| T \|$ and $\Ts \in \B(\Ys, \Xs)$. 
-\end{proof}
-As an example, let $X =\R^n$, $Y = \R^m$. Then, $\Xs = X$ and $\Ys = Y$. So, if $\xst \in \Xs$, then $\xst (x) = \sum\limits_{k = 1}^n x_k a_k$, for some $a = (a_1, \cdots, a_n)$. We proved that $\| \xst \| = \| a\|$. \\ 
-\indent Let $A$ be an $m \times n$ matrix and define $T: \R^n \mapsto \R^m$ such that $Tx = Ax$ for all $x$. Then, $\Ts: \left( \R^m \right)^{\star} \mapsto \left( \R^n \right)^{\star}$. We have that 
-\[ \la \Ts y, x \ra_{\R^n \times \R^m} = \la y, Tx \ra = \la y, Ax \ra = \la A^{T} y, x \ra_{\R^m \times \R^n}.\]
-Thus, we have proven that $\Ts y = A^{T} y$. \\
-\indent Now let $V \sbs X$ be a subspace and define $V^{\perp} \sbs \Xs$, where $\Vp = \{ \xst \in \Xs : \la \xst, x \ra = 0 \text{ for all } x \in V \}$. This is a subspace. If $W \in \Xs$ subspace, then we define $W^{\perp}= \{ x \in X: \la \xst, x \ra = 0 \text{ for all } \xst \in W \}$. 
-\begin{theorem}
-Let $T$ be a bounded, linear operator and $\Ts$ be its adjoint. Then, 
-\begin{enumerate}[topsep=-15pt]
-\item $\ker(T) = \text{Range}(\Ts)^{\perp}$
-\item $\ker(\Ts) = \text{Range}(T)^{\perp}$.
-\end{enumerate}
-\end{theorem}
-\vspace{-25pt}
-\begin{proof}(Only of 1.) Note the following equivalences:
-\begin{align*}
-x \in \ker(T) \Longleftrightarrow Tx = 0 & \Longleftrightarrow \la \ys, Tx \ra = 0 \text{ for all } \ys \in \Ys \\
-& \Longleftrightarrow \la \Ts \ys, x \ra = 0 \text{ for all } \ys \in \Ys \\
-& \Longleftrightarrow x \in \text{Range}(\Ts)^{\perp}.
-\end{align*} 
-\end{proof}
-\vspace{-25pt}
-\subsection*{4.5 - Compact Operators}
-\begin{definition}
-Let $(Y, d)$ be a complete metric space and let $S \sse Y$. Then, the following are equivalent.
-\begin{enumerate}[topsep=-15pt]
-\item $S$ is relatively compact ($\overline{S}$ is compact).
-\item $S$ is precompact (for all $\epsilon > 0$, $S$ can be covered by finitely many balls of radius $\epsilon$, or \textbf{totally bounded}).
-\item All $(x_n)_{n \geq 1} \in S$ contains a convergent subsequence in $Y$ (sequentially compact).
-\end{enumerate}
-\end{definition}
-\begin{definition}
-Let $X, Y$ be Banach spaces and let $T: X \mapsto Y$ be a linear operator. Then $T$ is said to be \textbf{compact} if $T(B(0,1))$ is relatively compact/precompact. As well, the following are equivalent:
-\begin{enumerate}[topsep=-15pt, itemsep=0pt]
-\item[(1)] $T$ is compact
-\item[(2)] $T(U)$ is relatively compact (precompact) for all bounded sets $U \sbs X$
-\item[(3)] For all $(x_n)_{n\geq 1}$ bounded sequences in $X$, there exists a subsequence $(x_{n_j})_{j \geq 1}$ such that $\left( Tx_{n_j} \right)_{j \geq 1}$ converges in $Y$. 
-\end{enumerate}
-\end{definition}
-\vspace{-15pt}
-To prove these equivalences, we note the following:
-\begin{enumerate}[topsep=-15pt, itemsep=0pt]
-\item[$(1) \rightarrow (2)$:] Find $r >0$ such that $U \sbs B(0, r)$. Since $T(B(0,1))$ is precompact, then $T(B(0, r))$ is precompact which implies that $T(U)$ is precompact.
-\item[$(2) \rightarrow (1)$:] Trivial
-\item[$(2) \rightarrow (3)$:] Assume that $\| x_n \| \leq M$ for all $n \geq 1$, $(x_n ) \sbs X$. Then, $(x_n) \sbs \overline{B(0, M)}$ and then, $(x_n)$ is bounded. Thus, $\{ Tx_n \}_{n=1}^{\infty}$ is precompact and thus there must exist a convergent subsequence. 
-\item[$(3) \rightarrow (2)$:] Assume that $U$ is a bounded set in $X$. We need to show that $T(U)$ is precompact. It is enough to prove that any sequence in $T(U)$ has a convergent subsequence. Let $(Tx_n)_{n\geq 1} \sbs T(U)$, thus $(x_n) \sbs U$ is bounded and thus $(x_n)$ is a bounded sequence. Then, there must exist a convergent subsequence and we are done.  
-\end{enumerate}
-\begin{theorem}
-Let $X, Y$ be Banach and $T: X \mapsto Y$ be linear. 
-\begin{enumerate}[topsep=-15pt, itemsep=0pt]
-\item $T$ compact implies that $T$ is bounded
-\item $I: X \mapsto X$, $Ix = x$ for all $x \in X$ is compact if and only if $X$ is finite dimensional. 
-\item If $T \in \B(X, Y)$ and $T(X) \sbs Y$ is a finite dimensional subspace of $Y$, then $T$ is compact. 
-\end{enumerate}
-\end{theorem}
-\vspace{-25pt}
-\begin{proof}
-Let $X, Y$ be Banach and $T$ be linear.
-\begin{enumerate}[topsep=-15pt, itemsep=0pt]
-\item[1.] Assume $T$ is compact. Then, 
-\[ \| T \| = \sup\limits_{\| x \| \leq 1} \| Tx \| = \sup\limits_{x \in \overline{B(0, 1)}} \| Tx \|.\]
-Since $\overline{B(0,1)}$ is bounded and $T$ is compact. Then, $T(\overline{B(0,1)})$ is precompact, which implies that $T$ is bounded.
-\item First, assume that $I$ is compact. Then, $I(B(0,1)) = B(0, 1)$ is precompact (relatively compact). Thus, $\overline{B(0,1)}$ is compact. Thus, $X$ is finite dimensional. The other direction is trivial.
-\item Let $T \in \B(X, Y)$ and assume that $T(x)$ is finite dimensional. Then $T(B(0, 1))$ is a bounded subset of $T(x)$, which is a finite dimensional normed space. Then, $T(B(0,1))$ is precompact and thus, $T$ is compact. 
-\end{enumerate}
-\end{proof}
-\vspace{-25pt}
-We denote the set of compact operators from $X$ to $Y$ by $\B_C(X, Y)$. We now discuss three important properties of compact operators. 
-\setcounter{proposition}{0}
-\begin{proposition}
-If $T: X \mapsto Y$ is compact and $X, Y$ are infinite dimensional, then $T$ is not invertible.
-\end{proposition}
-\vspace{-25pt}
-\begin{proof}
-Assume that $T^{-1}: Y \mapsto X$ exists. Then, by the OMT, $T^{-1} \in \B(Y, X)$. Then, $T \circ T^{-1} = I_Y$ and $T^{-1} \circ T = I_X$. We then have that 
-\[ B(0,1) = I_Y(B(0,1)) = T(T^{-1}(B(0,1))).\]
-Since $T^{-1}(B(0,1))$ is bounded in $X$, we have that $T$ is compact, $T(T^{-1}(B(0,1)))$ is precompact, and thus $B(0, 1)$ is precompact in $Y$. Thus, $Y$ is finite-dimensional and this is a contradiction.
-\end{proof}
-\begin{proposition}
-Let $T:X \mapsto Y$ and $S: Y \mapsto Z$, where $X, Y, Z$ Banach spaces and $T$ and $S$ are linear operators. 
-\begin{enumerate}[topsep=-15pt, itemsep=0pt]
-\item[(a)] $T$ compact and $S$ bounded implies that $ST: X \mapsto Z$ is compact
-\item[(b)] $T$ bounded and $S$ compact implies that $ST$ is compact. 
-\end{enumerate}
-\end{proposition}
-\vspace{-25pt}
-\begin{proof}
-\begin{enumerate}[topsep=-15pt, itemsep=0pt]
-\item[(a)] Let $(x_n) \sbs X$ be bounded. Then, since $T$ is compact, there exists $(Tx_{n_j})_{j \geq 1}$ convergent in $Y$. Since $S$ is bounded, this implies that $(STx_{n_j})_{j \geq 1}$ is convergent in $Z$ and thus, $ST$ is compact.
-\item[(b)] $ST(B(0,1))$ implies that $T(B(0,1))$ is bounded. Since $S$ is compact, we have that $S(T(B(0,1)))$ is precompact in $Z$. Therefore, $ST$ is compact. 
-\end{enumerate}
-\vspace{-25pt}
-\end{proof}
-\begin{proposition}
-If $X, Y$ are Banach spaces and $(T_n)_{n \geq 1} \B_C(X, Y)$ and $\lim\limits_{n \to \infty} \| T_n - T \} = 0$, then $T \in \B_C(X, Y)$. 
-\end{proposition}
-\vspace{-25pt}
-\setcounter{equation}{0}
-\begin{proof}
-Given $\epsilon > 0$, choose $n \geq $ such that $\| T_n - T \| < \frac{\epsilon}{2}$. Therefore, 
-\begin{equation}
-\| T_n x - T x \| < \frac{\epsilon}{2} \text{ for all } x \text{ such that } \| x \| \leq 1. 
-\end{equation}
-Since $T_n$ is compact, we have that $T_n(B(0,1))$ is precompact in $Y$. Then, there exists an $N = N(\epsilon)$ and $y_1, \cdots y_n$ such that 
-\begin{equation}
- T_n(B(0, 1)) \sbs \bigcup_{j = 1}^n B\left( y_i, \frac{\epsilon}{2}\right).
- \end{equation}
-We claim that for all $\epsilon > 0$, $T(B(0, 1)) \sbs \bigcup_{j = 1}^n B\left( y_i, \epsilon\right)$. To do this, if $x \in B(0, 1)$, then $\| x \| \leq 1$. Thus, from (2), we have that $T_n x \in B(y_i, \frac{\epsilon}{2})$ for some $i = \{ 1, \cdots, n\}$. Therefore, 
-\begin{equation}
-\| T_n x - y_i \| < \frac{\epsilon}{2}.
-\end{equation}  
-From (1), we get that $\| T_n x - Tx \| < \frac{\epsilon}{2}$. Therefore, from (3) as well, we get 
-\[ \| Tx - y_i \| \leq \| T_n x- y_i \| + \| T_n x - T x\| < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon.\]
-Therefore, $Tx \in B(y_i, \epsilon)$. Therefore, the claim is proven and thus $T(B(0, 1))$ is precompact and thus $T$ is compact.
-\end{proof}
-As an example, let $(\lambda_n)_{n \geq 1} \sbs \R$ where $\lambda_n \to 0$. Let $1 \leq p < \infty$ and define $T: \ell^p \mapsto \ell^p$ where 
-\[ T(x) = T(x_1, x_2, \cdots) = (\lambda_1 x_1, \lambda_2 x_2, \cdots, \lambda_n x_n, \cdots).\]
-We want to show that $T$ is compact. So, let us choose a sequence of $T_n$ such that 
-\[ T_n(x) = (\lambda_1 x_1, \lambda_2 x_2, \cdots, \lambda_n x_n, 0, 0, \cdots) = (\lambda_1 x_1) \mathbf{e}_1 + \cdots + (\lambda_n x_n)\mathbf{e}_n.\]
-Then, we can see that $T_n(x) \sbs \text{span}(\mathbf{e}_1, \cdots, \mathbf{e}_n)$ and therefore, $T_n(x)$ is finite dimensional. Now, $(T_n)_{n \geq 1}$ is a sequence of compact operators on $\ell^p$. Then, we can see that 
-\begin{align*}
-\| T x - T_n x \|_{\ell^p}^p & = \sum\limits_{j = n + 1}^{\infty} |\lambda_j|^p |x_j|^p \\
-& \leq \left(\sup\limits_{j \geq n + 1} |\lambda_j| \right)^p \sum\limits_{j = n + 1}^{\infty} |x_j|^p \\
-& \leq \left(\sup\limits_{j \geq n + 1} |\lambda_j| \right)^p \| x \|_p^p.
-\end{align*} 
-Therefore, we have that 
-\[\| T_n x - Tx \|_{\ell^p} \leq\sup\limits_{j \geq n + 1} |\lambda_j| \cdot \| x \|_p \]
-for all $x \in \ell^p$ and for all $n\geq 1$. Therefore, we can see taht 
-\[ \| T_n  - T \|_{\ell^p} \leq\sup\limits_{j \geq n + 1} |\lambda_j| \to 0 \hspace{4mm} \text{ as } n \to \infty.\]
-Therefore, $T_n \to T$ and since $\B_C(X, Y)$ is closed, $T \in \B_C(X, Y)$ and thus, $T$ is compact. \\
-First, we remind ourselves of the Arzela-Ascoli theorem. 
-\begin{theorem}(\textbf{Arzela-Ascoli Theorem}
-Let $E$ be a compact metric space. Let $(f_k)_{k \geq 1}$ be a sequence of continuous functions from $E$ to $\K$ such that 
-\begin{enumerate}[topsep=-15pt, itemsep=0pt]
-\item[(i)] the family $\{ f_k \}$ is equicontinuous;
-\item[(ii)] $\{ f_k \}$ is uniformly bounded.
-\end{enumerate}
-Then, the sequence $(f_k)_{k \geq 1}$ admits a uniformly convergent subsequence.
-\end{theorem}
-\begin{theorem}
-Let $X, Y$ be Banach Spaces and let $T: X \mapsto Y$ be linear. Then, $T$ is compact if and only if $\Ts: \Ys \mapsto \Xs$ is compact. 
-\end{theorem}
-\vspace{-25pt}
-\begin{proof}
-First, let $T \in \B_C(X, Y)$ and let $(\ys_n) \sbs \Ys$ be bounded. So $\| \ys_n \| \leq M$ for all $n \geq 1$. We need to prove that $(\Ts \ys_n)$ admits a convergent subsequence. Then, let $E = \overline{T(\overline{B(0, 1)})}$. Since $T$ is compact, this means that $E \sbs Y$ is compact as well. Now, we define $f_n: E \mapsto \K$ where $f_n = \ys_n \mid_{E}$. We claim that $(f_n)_{n \geq 1}$ satisfies the Ascola-Arzela theorem. First, for any $y, y' \in E$, we have that 
-\[ | f_n(y) - f_n(y') | = |\ys_n(y' - y)| \leq \| \ys_n\| \| y - y' \| \leq M \| y- y'\| \]
-for all $n \geq 1$. Therefore, this proves that $f_n $ is Lipschitz for all $n$ and therefore, $(f_n)$ is equicontinuous. Now, we note that $\sup\limits_{y \in E} \| y \| = \sup\limits_{\| x \| \leq 1} \| Tx \| \leq \| T \| < \infty$. Then, we have that 
-\[ |f_n(y) | = \| \ys_n(y) \| \leq \| \ys_n \| \| y \| \leq M \| T \| < \infty.\]
-Therefore, $\{ f_n \}$ is uniformly bounded and then by the Arzela-Ascoli theorem, there exists an $(y_{n_j})_{j \geq 1}$ that uniformly converges on $E$. Now, we claim that $(\Ts \ys_{n_j})_{j \geq 1}$ is convergent in $\Xs$. Since $\Xs$ is Banach, it is enough  to prove that the sequence is Cauchy. To this end, 
-\begin{align*}
-\| \Ts \ys_{n_j} - \Ts \ys_{n_k} \| &= \sup\limits_{\| x \| \leq 1} | \la \Ts \ys_{n_j} - \Ts \ys_{n_k}, x \ra | \\ 
-& = \sup\limits_{\| x \| \leq 1} | \la \ys_{n_j} - \ys_{n_k}, Tx \ra | \\
-& = \sup\limits_{\| x \| \leq } | f_{n_j}(Tx) - f_{n_k}(Tx) | \to 0 \text{ as } k, j \to \infty
-\end{align*}
-since this is our subsequence that is uniformly convergent and Cauchy. Therefore, this shows that $(\Ts \ys_n)_{j \geq 1}$ is convergent and therefore $\Ts$ is compact. \\
-\indent Now, assume that $\Ts: \Ys \mapsto \Xs$ is compact. We need to prove that $T$ is compact. To this end, from the first part, we have that $T^{\star \star}: \Xss \mapsto Y^{\star \star}$ is compact. Let $(x_n) \sbs X$ be a bounded sequence. We need to show that $(T x_n)_{n\geq 1}$ admits a convergent subsequence. For $n \geq 1$, we have that $F_{x_n} \in \Xss$, and since $\| F_{x_n} \| = \| x_n \|$, we have that $(F_{x_n})_{n \geq 1} \sbs \Xss$ is bounded as well. Since $\Tss$ is compact and $(F_{x_n})_{n \geq 1}$ is bounded, we must have that $\left( \Tss F_{x_n}\right)_{n \geq 1}$ admits a convergent subsequence and is hence Cauchy. \\
-\indent Now, note that $\Tss F_x = F_{Tx} \in \Yss$. Indeed, we have 
-\[ \la \Tss F_x, \ys \ra = \la F_x, \Ts \ys \ra = \la \Ts \ys, x \ra = \la \ys, Tx \ra = \la F_{Tx}, \ys \ra.\]
-Thus, since this is true for all $\ys$, we have that $\Tss F_x = F_{Tx}$. Next, we prove that $(T x_n)$ is Cauchy (and hence a subsequence). We have that 
-\[ \Tss F_{x_n} - \Tss F_{x_m \| = \| F_{Tx_n} - F_T x_m} \| = \| F_{Tx_n - T x_m} \| = \| T x_n - T x_m \| \to 0 \text{ as } m,n \to \infty \]
-because $(\Tss F_{x_n})$ is Cauchy. Therefore, we have that $T$ is compact. 
-\end{proof}
-\subsubsection*{Another Example of Compact Operators}
-\begin{theorem}
-Let $K: [a, b] \times [a, b] \mapsto \R$ be continuous. Then, the integral operator on $X = C([a,b])$, with the norm $\| f \| = \max\limits_{x \in [a.b]} |f(x)|$, 
-\[ (Tf)(x) = \dint_a^b K(x, y) \, f(y) \, dy\]
-is compact. 
-\end{theorem}
-\vspace{-25pt}
-\begin{proof}
-Consider a bounded sequence of continuous functions $f_n \in C([a, b])$. We need to prove that the sequence $\Lambda f_n$ admits a uniformly convergent subsequence. By the Arzela-Ascoli theorem, it suffices to show that the functions $\Lambda f_n$ are uniformly bounded and equicontinuous. \\
-\indent First, since $K$ is continuous on the compact set $[a, b] \times [a, b]$, it is bounded and uniformly continuous. Namely, there exists a constant $\kappa$ such that 
-\[ |K(x, y)| \leq \kappa \hspace{3mm} \text{ for all } x, y.\]
-Moreover, for every $\epsilon > 0$, there exists a $\delta > 0$ such that 
-\begin{equation}
-|K(x, y) - K(x', y)| \leq \epsilon \hspace{4mm} \text{ whenever } |x - x'| \leq \delta, \, x, x', y \in [a, b].
-\end{equation}
-By assumption, there exists a constant $M$ such that 
-\[ \| f_n \| = \max\limits_{x \in [a,b]} |f_n(x) | \leq M\]
-for all $n \geq 1$. This must imply then that 
-\[ \left| \left( \Lambda f_n \right)(x) \right| \leq \dint_a^b |K(x, y)| |f_n(y)|\, dy \leq (b-a) \kappa M,\]
-which proves that the functions $\Lambda f_n$ are uniformly bounded. Lastly, let $\epsilon > 0$ be given. Choose $\delta > 0$ such that $(4)$ holds. Then, if $|x - x'| \leq \delta$, then for all $n \geq 1$, we have that 
-\[ \left| \left( \Lambda f_n \right)(x) - \left( \Lambda f_n \right)(x') \right| \leq \dint_a^b |K(x, y) - K(x', y)| |f_n(y)| \, dy \leq (b-a) \epsilon M.\]
-Since $\epsilon$ was arbitrary, this proves the equicontinuity of the sequence of $(\Lambda f_n)_{n \geq 1}$. Therefore, applying the Arzela-Ascoli theorem gives us the completion of the proof. 
-\end{proof}
-\section*{Chapter 5: Hilbert Spaces}
- \setcounter{theorem}{0}
- \setcounter{proposition}{0}
-  \setcounter{definition}{0}
- \setcounter{corollary}{0}
- \setcounter{cons}{0}
- \setcounter{equation}{0}
- \setcounter{lemma}{0}
-\subsection*{Section 5.1 - Inner Products}
-\begin{definition}
-Let $H$ be a vector space over $\K$. An \textbf{inner product} on $H$ is a map on $H \times H$, $(\cdot, \cdot) \mapsto \K$ such that for all $x, y, z \in H$ and  $\alpha \in \K$,
-\begin{enumerate}[topsep=-15pt, itemsep=0pt]
-\item[(i)] $(x, y) = \ov{(y, x)}$
-\item[(ii)] $(x + y, z) = (x, z) + (y, z)$
-\item[(iii)] $(\alpha x, y) = \alpha (x, y)$
-\item[(iv)] $(x, x) \geq 0$ and $(x, x) = 0$ if and only if $x = 0$. 
-\end{enumerate}
-We will call $(H, \inner)$ an \textbf{inner product space}.
-\end{definition}
-We note that $\inner$ is linear in the first component and  is conjugate linear in the second component, i.e.
-\[ (x, \alpha y +\beta z) = \ov{(\alpha y + \beta z, x)} = \ov{\alpha} \ov{(y, x)} + \ov{\beta} \ov{(z, x)} = \ov{\alpha} (x, y) + \ov{\beta} (x, z). \]
-We denote $\| x \| = (x, x)^{\frac{1}{2}}$. From the properties (i)-(iv), we get that $(x, x)$ is real, $(x, x) \geq 0$, $\| \alpha x \| = | \alpha | \| x \|$, and that $\| x \| = 0$ if and only if $x = 0$. Now, to prove that $\| \cdot \|$ is a norm, we just have to prove the triangle inequality. 
-\begin{theorem}
-If $H$ is an $\ips$, then 
-\begin{enumerate}[topsep=-15pt, itemsep=0pt]
-\item (Cauchy-Schwarz) $|(x, y)| \leq \| x \|  \| y \|$ for all $x, y \in H$ with equality holding if and only if $x = \lambda y$;
-\item $\| x + y \| \leq \| x \| + \| y \|$ for all $x, y \in H$. 
-\end{enumerate}
-\end{theorem}
-\vspace{-25pt}
-\begin{proof}
-\begin{enumerate}
-\item Assume that $y = 0$ (since $(x, 0) = 0$). Then, from (iv), we have that $(x + \lambda y, x + \lambda y) \geq 0$ for all $\lambda \in \K$. Then, we can see that 
-\[ (x, x) + \lambda(y, x) + \ov{\lambda} (x, y) + \lambda \ov{\lambda} (y, y) \geq 0\]
-\[(x, x) + \lambda(y, x) + \ov{\lambda  (y, x)} + \lambda \ov{\lambda} (y, y) \geq 0 \]
-\[\| x \|^2 + 2 \Re\left( \lambda \ov{(x, y)} \right) + |\lambda| \| y \| \geq 0. \]
-Letting $\lambda = - \frac{(x, y)}{\| y\|^2}$, we can see that 
-\[ \| x \|^2 - 2 \frac{|(x, y)|^2}{\| y \|^2} + \frac{|(x, y)|^2}{\| y \|^4} \cdot \| y \|^2 \geq 0\]
-\[ \| x \|^2 \| y\|^2 \geq |(x, y)|^2\]
-which is our desired result.
-\item Observe that 
-\begin{align*}
-\| x+ y \|^2 = (x + y, x+ y) & = \| x\|^2 + 2 \Re (x, y) + \| y\|^2 \\
-& \leq \| x \|^2 + 2 |(x, y)| + \| y \|^2 \\
-& \leq \| x\|^2 + 2 \| x \| \| y\| + \| y\|^2 \\
-& = (\| x \| + \| y \| )^2.
-\end{align*}
-\end{enumerate}
-\end{proof}
-\vspace{-20pt}
-\begin{definition}
-An $\ips$ which is complete with respect to the induced norm $\| \cdot \| = \inner^{\frac{1}{2}}$ is called a \textbf{Hilbert Space}.
-\end{definition}
-\vspace{-25pt}
-We now present some examples of Hilbert Spaces: 
-\begin{enumerate}[topsep=-15pt]
-\item We have that $(\R^n, \| \cdot \|_{2}), \| x \| = \| (x_1, \cdots, x_n) \| = \sqrt{x_1^2 + \cdots + x_n^2}$ is a Hilbert space, where $(x, y) = x_1 y_1 + \cdots + x_n y_n$ and $\| x \| = \sqrt{(x, x)} = \sqrt{x \cdot x}$. 
-\item As well, we have in $\C^n$, if we let $(x_1, \cdots, x_n) \in \C^n$ and $(y_1, \cdots, y_n) \in \C^n$, then we define the inner product $(x, y) = \sum\limits_{k =1}^n x_k \ov{y_k}$. Then, we have that $\| x \| = \sqrt{(x, x)} = \left( \sum\limits_{k =1}^n |x_k|^2\right)^{\frac{1}{2}}$. This is a Hilbert space.
-\item Taking a look at $\ell^2$, we let $x = (x_1, \cdots, x_n , \cdots)$ and $y = (y_1, \cdots, y_n, \cdots)$, both in $\ell^2$. Then, to define a Hilbert space, we let $(x, y) = \sum\limits_{k =1}^{\infty} x_k y_k$. As well, we have that the norm is $\| x \|_{\ell^2} = \sqrt{(x, x)} = \left( \sum\limits_{k =1}^{\infty} |x_k|^2\right)^{\frac{1}{2}}$.
-\item Let $\Om \in \R^d$, where $d \in \N$ and remember that $\ml^2(\Om) = \left\lbrace f: \Om \mapsto \R : \int_{\Om} f^2 < \infty \right\rbrace$. Then, define
-\[(f, g) = \dint_{\Om} f(x) g(x) \, dx, \hspace{4mm} \text{ and } \hspace{4mm} \| f \|_{\ml^2(\Om)} = (f, f)^{\frac{1}{2}} = \left( \dint_{\Om} f^2(x) \, dx \right)^{\frac{1}{2}}. \]
-This is a Hilbert space as well.
-\end{enumerate}
-Now, let $(H, \inner)$ be an $\ips$ and let $x_0 \in H$. Then, if we define $F: x \to (x, x_0$, this is a linear bounded functional and one can see that $|F(x)| = |(x, x_0)| \leq \| x \| \| x_0 \|$ for all $x \in H$. As well, we define $G: x \to (x_0, x)$ is a continuous conjugate linear functional, i.e. $G(\alpha x + \beta y) = \ov{\alpha} G(x) + \ov{\beta} G(y)$. 
-\begin{definition}
-Let $(H, \inner)$ be an $\ips$. We say that $x, y \in H$ are 
-\begin{enumerate}[topsep=-15pt, itemsep=0pt]
-\item \textbf{orthogonal} if $(x, y) = 0$, denoted by $x \perp y$;
-\item \textbf{parallel} if $y = \lambda x$ or $x = \lambda y$, denoted by $x \|| y$.
-\end{enumerate}
-\end{definition}
-\vspace{-25pt}
-As a quick example, let $H = \ml^2([-1, 1])$ and take $f(x) = x$, $g(x) = x^2$, and $h(x) = 2x$. Then, we can see that 
-\[ (f, g) = \dint_{-1}^1 f(x) \, g(x) \, dx = \dint_{-1}^1 x^3 \, dx = 0. \]
-Therefore, $f \perp g$. As well, since $2 f(x) = h(x)$, we can see that $f(x) \|| h(x)$. 
-\begin{theorem}
-Let $x, y \in (H, \inner)$. 
-\begin{enumerate}[topsep=-15pt, itemsep=0pt]
-\item (\textbf{Pythagoream Theorem}) If $x \perp y$, then $\| x + y \|^2 = \| x \|^2 + \| y \|^2$. 
-\item (\textbf{Parallelogram Identity}) For all $x, y$ we have that 
-\[ \| x + y \|^2 + \| x - y \|^2 = 2 \left( \| x \|^2 + \| y \|^2 \right).\]
-\end{enumerate}
-\end{theorem}
-\vspace{-25pt}
-\begin{proof}
-\begin{enumerate}
-\item This follows quickly from 
-\[\| x + y \|^2 = (x + y, x+ y) = \| x \|^2 + \| y \|^2 + 2 \Re (x, y) = \| x \|^2 + \| y \|^2, \]
-since $(x, y) = 0$.
-\item A similar argument can be made as in the first part.
-\end{enumerate}
-\end{proof}
-\subsection*{5.2 - Orthogonal Projections}
-Let $(H, \inner)$ be a Hilbert Space. 
-\begin{lemma}
-Let $V$ be a closed subspace of $H$ and let $x \in H$. Then, there exists a unique $v_0 \in V$ such that 
-\begin{equation}
-d = d(x, V) = \inf\limits_{y \in V} \| x - y \| = \| x - v_0 \|, \hspace{5mm} \text{ i.e., } \hspace{5mm} \| x - v_0 \| \leq \| x - y \| 
-\end{equation}
-for all $y \in V$. In addition, this value $v_0$ satisfies 
-\begin{equation}
-(x - v_0, v) = 0, \hspace{5mm} \text{ for all } v \in V. 
-\end{equation}
-(Note: that this implies that $(v_0, v) = (x, v)$ for all $v \in V$.)
-\end{lemma}
-\vspace{-25pt}
-\begin{proof}
-From the definition of $d$, there exists a sequence $(y_n)_{n \geq 1} \sbs V$ such that 
-\begin{equation}
-\| x - y_n \| \to d \hspace{3mm} \text{ as  } n \to \infty. 
-\end{equation}
-Then, we have that 
-\begin{align*}
-\| y_n - y_m \|^2 & = \| (x - y_m) - (x - y_n) \|^2 \\
-& = 2 \left( \| x - y_m \|^2 - \| x - y_n \|^2 \right) - 4 \| x - \frac{1}{2} (y_n - y_m) \|^2 \\
-& \leq 2 \left( \| x - y_m \|^2 - \| x - y_n \|^2  \right) - 4d^2 \to 0 
-\end{align*}
-as $n, m \to \infty$. Therefore, $(y_n)$ is Cauchy in $H$ and since $H$ is complete, we have that $(y_n)$ is convergent. Therefore, $y_n \to y \in V$ since $V$ is closed. We call this $y = v_0$. Since $\| x - y_n \| \to d$ and $y_n \to v_0$, then $\| x - y_n \| \to \| x - v_0 \|$ since norms are continuous. Then, (1) must hold since the infimum is achieved. Now, from (1), we have that $\| x - v_0\|^2 \leq \| x - v_0 - \lambda v \|^2$ for all $\lambda \in \R$ and $v \in V$ (since $v_0 + \lambda v \in V$). Thus, 
-\[ \| x - v_0 \|^2 \leq (x - v_0 - \lambda v, x - v_0 -\lambda v)  \| x - v_0\|^2 - 2 \lambda \Re(x - v_0, v) + \lambda^2 \| v\|^2.\]
-Therefore, we have that 
-\[ 0 \leq -2 \lambda \Re(x - v_0, v) + \lambda^2 \| v \|^2.\]
-However, since $a\lambda^2 + b \lambda \geq 0$ for all $\lambda$ if and only if $b = 0$ and $a \geq 0$, we must ave that $\Re(x - v_0, v) = 0$ for all $v \in V$. Now, if we replace $v$ by $iv$, we have that 
-\[ 0 = \Re(x - v_0, iv) = \Re(-i(x - v_0, v)) = \Im(x - v_0, v) = 0.\]
-Therefore, $(x - v_0, v) = 0$ for all $v$ since the real and imaginary parts are both zero. \\
-\indent Now, we must prove the uniqueness of the infimium. Therefore, assume that there are $v_1$ and $v_2$ such that $d = \| x - v_1 \| \leq \| x - y \|$ and $d = \| x - v_2 \| \leq \| x - y \|$ for all $y \in V$. Then, we have that 
-\begin{align*}
-\| v_1  - v_2 \|^2 & = \| (x - v_2) + (v_1 - x) \|^2  \\
-& = 2 \left( \| x - v_2 \|^2 + \| x - v_1 \|^2 \right) - 4 \| x - \frac{1}{2} (v_1  +v_2 ) \|^2 \\
-& \leq 4d^2 - 4d^2 = 0.
-\end{align*} 
-Therefore, $v_1 -v_2 = 0$ and we have uniqueness. 
-\end{proof}
-\begin{definition}
-Define $P_V: H \mapsto H$, $(P = P_V)$ by $P(x) = v_0$ for all $x \in H$ (where $v_0$ is the unique vector from the lemma). $P$ is called the \textbf{orthogonal projection onto} $V$. 
-\end{definition}
-\begin{proposition}
-Here are some properties regarding $P$:
-\begin{enumerate}[topsep=-15pt, itemsep=0pt]
-\item[(i)] $P$ is linear
-\item[(ii)] $Px = x$ for all $x \in V$
-\item[(iii)] $P^2 = P$
-\item[(iv)] $\| P x \| \leq \| x \|$ for all $x \in H$, and if $v \neq 0$, then $\| P \| = 1$
-\item[(v)] $(Px, y) = (Px, Py) = (x, Py)$. 
-\end{enumerate}
-\end{proposition}
-\vspace{-25pt}
-\begin{proof}
-\begin{enumerate}
-\item[(i)] Let $x, y \in H$ and $\alpha \in \K$. Then, since $(Px, v) = (x, v)$ and $(Py, v) = (y, v)$ for all $v \in V$, we can add them and get that $(Px + Py, v) = (x + y, b)$ for all $v \in V$. Therefore, we have that $(P(x + y), v) = (x + y, v)$ for all $v \in V$. Therefore, by the uniqueness of projections, $P(x + y) = P(x) + P(y)$. \\
-\indent Similarly, we know that $(\alpha Px, v) = (\alpha x, v)$ for all $v \in V)$ and $(P(\alpha x), v) = (\alpha x, v)$ for all $V$. Then, by the uniqueness of the projection, we have that $P(\alpha x) = \alpha P(x)$. \\
-\item[(ii)] Let $x \in V$. Then, $(x, v) = (x, v)$ for all $v \in V$. As well, $(Px, v) = (x, v)$ for all $v \in V$. Then, by uniqueness, we have that $Px = x$ for all $x \in V$. 
-\item[(iii)] $P^2(x) = P(P(x)) = P(x)$, since $P(x) \in V$. 
-\item[(iv)] Let $x \in H$. Then, $(Px - x, v) = 0$ for all $v \in V$. In particular, for $v = Px$, we have that $(Px - x, Px) = 0$. Then, by the Pythagorean Theorem,
-\[ \| x\|^2 = \| Px - x \|^2 + \| Px \|^2.\]
-Thus, since $\| Px - x \|^2 \geq 0$, $\| x \|^2 \geq \| Px \|^2$, and thus, $\| x \| \geq \| P x\|$. Therefore, $\| P \| \leq 1$. Now, if $V \neq \{ 0 \}$, let $v \in V$, $v \neq 0$. Thus, $Pv = v$. Then, 
-\[ \| P \| = \sup\limits_{x \in H} \frac{\| Px \|}{\| x\|} \geq \frac{\| Pv \|}{\| v \|} = 1.\] 
-Then, $\| P \| = 1$. 
-\item[(v)] Let $x, y \in H$. Then, 
-\[ (Px, y) = \ov{(y, Px)} = \ov{(Py, Px)} = \ov{\ov{(Px, Py)}} = (Px, Py).\]
-As well, we know that since $Py \in V$, then $(x, Py) = (Px, Py)$. 
-\end{enumerate}
-\end{proof}
-\vspace{-25pt}
-We note that if $V$ is finite dimensional, then there is the canonical basis $e_1, e_2, \cdots, e_n$ which is an orthonormal basis (by the Gram-Schmidt ProcesS). Let $Px = \sum\limits_{j =1}^n \alpha_j e_j$. Then, we get that $(Px, e_j) = (x, e_j)$ for all $j = 1, \cdots, n$. As well, this means that 
-\[ \left( \sum\limits_{i=1}^n \alpha_i e_i, e_j\right) = (x, e_j) = \alpha_j. \]
-Therefore, $Px = \sum\limits_{j =1}^n (x, e_j) e_j$.
-\vspace{-20pt}
-\subsubsection*{Orthonormal Subspace (on a set)}
-\vspace{-20pt}
-Given a set $S \sbs H$, we define $S^{\perp} = \{ y \in H : (y, x) = 0, \forall x \in S \}$. Then, we claim that $S^{\perp}$ is a subspace of $H$ and that $S^{\perp}$ is a closed subspace of $H$. To prove the second claim, if $(y_n)_{n \geq 1}$ is a sequence in $S^{\perp}$, where $y_n \to y \in H$, we need to show that $y \in S^{\perp}$. Then, note that $(y_n, x) \to (y, x)$ for all $x \in S$ since 
-\[ |(y_n, x) - (y, x)| = |(y_n - y, x)| \leq \| y_n - y \| \| x \| \to 0 \text{ as } n \to \infty.\]
-So, since $y_n \in S^{\perp}$, $(y_n, x) = 0$ for all $n$. Therefore, $(y, x) = 0$, which implies that $y \in S^{\perp}$. Thus, $S^{\perp}$ is closed. 
-\vspace{-20pt}
-\subsubsection*{Orthonormal Decomposition}
-\vspace{-20pt}
-Let $V$ be a closed subspace of $H$, which is Hilbert and define $P_V: H \to H$ be the orthogonal projection onto $V$. Then, $(x - P_V x, V) = 0$ for all $v \in V$, or $x - P_Vx \in \Vp$. Then, any $x \in H$ can be written as 
-\[ x = \underbrace{P_V x}_{\in V} + \underbrace{x - P_V x}_{\in \Vp}, \hspace{5mm} (PV x, x - P_V x) = 0.\]
-Note that if $x \in V \cap \Vp$, then $(x, x) = 0$ which implies that $x = 0$. Thus, $V \cap \Vp = \{ 0 \}$. Thus, $H = V \oplus \Vp$. \\
-\begin{remark} 
-We now want to remark on 2 key concepts
-\begin{enumerate}[topsep=-15pt, itemsep=0pt] 
-\item Since $\Vp$ is closed in $H$, $H = \Vp \oplus \Vpp$, where $\Vpp = (\Vp)^{\perp}$. Then, $\Vpp = V$. 
-\item If $V \sbs H$ is a closed subspace and $H$ is a Hilbert space where $H = V \oplus \Vp$, then $P_{\Vp} = I - P_V$. 
-\end{enumerate}
-\end{remark}
-\vspace{-25pt}
-\begin{proof}
-\begin{enumerate}
-\item We know that $\Vp = \{ y \in H: (x, y) = 0 \forall x \in V\}$. Thus, $\Vpp = \{ x \in H : (x, y) = 0 \forall y \in \Vp \}$. Therefore, if $x \in V$, then $(x, y) = 0$ for all $y \in \Vp$ from the definition of $\Vp$. Then, from the definition of $\Vpp$, $x \in \Vpp$. Thus, $V \sse \Vpp$. Now, let $x \in \Vpp$. Then, since $\Vpp \sbs H = V \oplus \Vp$, we know that $x = x_v + x_{v^{\perp}}$, where $x_v \in V$ and $x_v \in \Vp$. Then, since $V \sse \Vpp$, $x_v \in \Vpp$. Thus, since $x \in \Vpp$, 
-\[ \underbrace{x - x_v}_{\in \Vpp} = \underbrace{x_{v^{\perp}}}_{\in \Vp}.\]
-Thus, since $\Vp \cap \Vpp = \{ 0 \}$, $x - x_V = 0$ and thus, $x = x_V \in V$. Therefore, we are done. 
-\item We know that $(x - P_{\Vp} x, v^{\perp}) = 0$ for all $v^{\perp} \in \Vp$ from the definition of $P_{\Vp}$. As well, we have that $(x -(I - P_{\Vp})x, v^{\perp}) = 0(P_V x, v^{\perp}) = 0$ for all $v^{\perp} \in \Vp$. From the uniqueness of orthonormal projections, we have that $P_{\Vp} = I - P_V$.
-\end{enumerate}
-\end{proof}
-\subsection*{5.3 - Linear Functionals on Hilbert Spaces/Riesz Representation Theorem}
-Let $(H, \inner)$ be a Hilbert space where $\| \cdot \| = \inner^{\frac{1}{2}}$. Let $f \in \Hs$, where $f: H \mapsto \K$ is linear and bounded. As an example, let $H = (\R^n, \inner)$, where we have the Euclidean inner product. Then, if $f \in \Hs$, there exists an $\alpha \in \R^n$ such that 
-\[ f(x) = \sum\limits_{k = 1}^n a_k x_k, \hspace{3mm} a = (a_1, \cdots, a_n) \in \R^n,\]
-and $\| f \| = \| a \| = (a, a)^{\frac{1}{2}}$. Then, we can define the Kernel as $\ker(f) = \{ x \in \R^n : f(x) = 0 \} = \{ x \in \R^n : a_1 x_1 + \cdots + a_n x_n = 0 \}$. Let $n = 3$. Then $\ker(f) = \{ x = (x_1, x_2, x_3) : a_1 x_1 + a_2 x_2 + a_3 x_3 = 0 \}$ is a plane that is orthogonal to $a$. Then, $\dim(\ker(f)) = n - 1$. So, $\ker(f)$ is a hyperplane. We know that $a \perp \ker(f)$ and if $f(x) = (a_1 x_1 + a_2 x_2 + a_3 x_3)/\| a \|$ and we define 
-\[ H_+ = \{ x \in \R^3 : f(x) > 0 \}\]
-\[ H_- = \{ x \in \R^3 : f(x) < 0 \},\]
-we can have that $\R^3 = H_+ \cup H_- \cup \ker(f)$. \\
-\indent Now, for any $y \in H$, we define $f_y: H \mapsto \K$ by $f_y(x) = (x, y)$ for all $x \in H$.
-\begin{proposition}
-$f_y$ is a bounded linear functional on $H$ and $\| f_y \| = \| y \|$.
-\end{proposition}
-\vspace{-25pt}
-\begin{proof}
-Proving that $f_y$ is linear is elementary, as it is just playing with the inner product. Now, we can note that 
-\[ |f_y(x)| = |(x, y) | \leq \| x \| \| y\| \]
-for all $x \in X$. Therefore, $f_y$ is bounded and $\| f_y \| \leq \| y \|$. We note as well that 
-\[ \| f_y \| = \sup\limits_{ \| x \| \neq 0 } \frac{|f_y(x)|}{\| x \|} \geq \frac{|f_y(y)|}{\| y \|} = \frac{|(y, y)|}{\| y \|} = \frac{\| y\|^2}{\| y \|} = \| y\|.\]
-Therefore $\| f_y \| \geq \| y \|$ and thus, $\| f_y \| = \| y \|$. 
-\end{proof}
-\vspace{-25pt}
-We note that $\| f_y \| = \| y \|$ gives us a new formula for $\| y\|$, namely 
-\[ \| y \| = \sup\limits_{x \neq 0} \frac{|(x, y)|}{\| x \|}.\]
-\begin{theorem}
-\textbf{(Riesz Representation Theorem (RRT))} Let $H$ be a Hilbert Space and $f \in \Hs$. Then, there exists a unique $y \in H$ such that $f(x) = (x, y)$ for all $x \in H$ and $\| f \| = \| y\|$. 
-\end{theorem}
-\vspace{-25pt}
-\begin{proof}
-If $f \equiv 0$, we take $y = 0$ and we are done. So, assume $f \neq 0$. Then, we know that there must exist a $y_0 \in (\ker(f))^{\perp}$, $y_0 \neq 0$ (and thus, $f(y_0) \neq 0$). We claim that $H = \ker(f) \oplus \spa\{ y_0 \}$. To this end, for any $x \in H$, we can write 
-\[ x = \underbrace{x - \frac{f(x)}{f(y_0)} y_0}_{\in \ker(f)} + \underbrace{\frac{f(x)}{f(y_0)} y_0}_{\in \spa\{ y_0 \}}. \]
-Therefore, we have that $H = \ker(f) \oplus \spa\{ y_0 \}$ since the are orthogonal. Thus, $\left( x - \frac{f(x)}{f(y_0)} y_0, y_0 \right) = 0$. Observe that this implies 
-\[ (x, y_0) = \left(\frac{f(x)}{f(y_0)} y_0, y_0 \right)\]
-\[ (x, y_0) = \frac{f(x)}{f(y_0)}  (y_0, y_0)\]
-\[ f(x) = \frac{f(y_0)}{\| y_0 \|^2} y_0 = \left( x , \frac{\ov{f(y_0)}}{\| y_0\|^2} \, y_0 \right) = (x, y),\]
-where $y = \frac{\ov{f(y_0)}}{\| y_0\|^2}\,  y_0$. To prove uniqueness, assume that there are $y_1, y_2 \in H$ such that $f(x) = (x, y_1) = (x, y_2)$ for all $x \in H$. Then, we would have that $(x, y_1 - y_2) = 0$ for all $x \in H$. If we let $x = y_1 - y_2$, we will get that $y_1 - y_2 = 0$, which implies that $y_1 = y_2$. 
-\end{proof}
-\vspace{-15pt}
-As an example, take $H = \ml^2(\Om)$, where $(f, g) = \int_{\Om} f(x) g(x) \, dx,$ and $\Om \sse \R$. Then, we can see that any bounded linear functional on $\ml^2$ is of the form $F(f) = (f, g) = \int_{\Om} f(x) g(x) \, dx,$ for some $g \in \ml^2(\Om)$. We now have some notes regarding the RRT. 
-\begin{enumerate}[topsep=-15pt, itemsep=0pt]
-\item The map $y \mapsto f_y \in \Hs$ (where $f_y(x) = (x, y)$) is a conjugate linear and continuous mapping. 
-\item If $\K = \R$, then $y \mapsto f_y$ and $\| f_y \| = \| y\|$ is a bounded linear isometric isomorphism. This, $\Hs = H$.
-\item If $\K = \R$, the inverse function $f_y \mapsto y$, where $f_y(x) = (x, y)$ is called the \textbf{Riesz canonical (isometric) isometry}.
-\item Assume that $\K = \R$. Then, the dual of a Hilbert space is also a Hilbert space. Let $R: \Hs \mapsto H$, where $R\ys = y$, where $y$ is the unique element from the RTR such that $\ys(x) = (x, y)$ for all $x \in H$. Then, define $(\ys, z^{\star}) = (R \ys, R z^{\star})$ So, if $\zs(x) = (x, z)$ for all $x \in H$, then, $(\ys, \zs) = (y, z)$. Thus, we can note that 
-\[ (\ys, \ys)^{\frac{1}{2}} = (R \ys, R \ys)^{\frac{1}{2}} = (y, y)^{\frac{1}{2}} = \| y \| = \| \ys \|. \]
-\item Every Hilbert space is reflexive, i.e., $\Hss = H$ (letting $\K = \R)$. To prove this, we need to show that $y \mapsto F_y \in \Hss$, $F_y(\ys) = \ys(y)$ is surjective. We let $\yss \in \Hss = (\Hs)^{\star}$. Then, by the RRT on $\Hs$, we know that there exists a $\ys \in \Hs$ such that $\yss(\xst) = (\xst, \ys)$ for all $\xst \in \Hs$. But, we know that 
-\[ (\xst, \ys) = (R \xst, R \ys) = (x, y) = (\xst(y) = F_y(\xs),\]
-where there are unique $x, y$ such that $R\xst = x$ and $R\ys = y$. Thus, we have that $\yss = F_y$ since this is for all $\xs$. Threfore, we have proved surjectivity and reflexive property is proved. 
-\end{enumerate}
-\subsection*{5.4 - Orthonormal Sets}
-\begin{definition}
-Let $(H, \inner)$ be a Hilbert space.
-\begin{enumerate}[itemsep=0pt, topsep=-15pt]
-\item[(1)] Let $S \sbs H$. Then, the $\spa(S)$ is defined as
-\[ \spa(S) = \left\lbrace \sum\limits_{k = 1}^n \alpha_k x_k : \alpha_k \in \K, x_k \in S, n \geq 1 \right\rbrace,\]
-i.e. the set of all linear combinations with vectors in $S$. 
-\item \textbf{The closed subspace generated by} $S$ is $\ov{\spa(S)}$.
-\item We say that $S \sbs H$ is \textbf{total} if $\ov{\spa(S)} = H$.
-\item A set $\{ x_i \}_{i \in I} \sbs H$ is \textbf{linearly independent} if any finite subset is linearly independent.
-\item A set $\{ e_i \}_{i \in I} \sbs H$ is \textbf{orthonormal} if $(e_i, e_j) = \delta_{ij}$ and $\| e_j \| = 1$ for all $j \in I$ (note that orthonormal implies linear independence).
-\item A countable orthonormal set $\{e_1, e_2, e_3, \cdots \}$ is an \textbf{orthonormal basis for} $H$ if $\spa\{ e_1, e_2, e_3, \cdots \}$ is dense in $H$, i.e. if the set is total. 
-\end{enumerate}
-\end{definition}
-\begin{lemma}
-Let $S$ be a subset of a Hilbert space $H$. Then, the following are equivalent
-\begin{enumerate}[itemsep=0pt, topsep=-15pt]
-\item $S$ is total.
-\item $S^{\perp} = \{ 0 \}$, or $(x, s) = 0$ for all $s \in S$ implies that $x = 0$. 
-\end{enumerate}
-\end{lemma}
-\vspace{-15pt}
-We note that using the previous lemma, then we have that $\{ e_1, e_2, \cdots \}$ is an orthonormal basis for $H$ if $(e_n, e_m) = \delta_{nm}$ for all $n, m \in \N$ and $(x, e_n) = 0$ for all $n$ implies that $x = 0$. We now pose the question: How do we write vectors in a space with an infinite basis?
-\begin{theorem} (\textbf{Sums of orthonormal series)} Let $(e_n)_{n \geq 1}$ be an orthonormal sequence and define $V = \ov{\spa\{ e_n \}_{n \geq 1}} \sbs H$, which is closed. In addition, for all $n \geq 1$, and for all $x \in H$, define $P_n(x) = \sumkn (x, e_k) x_k.$ Then, 
-\begin{enumerate}[itemsep=-15pt, topsep=0pt]
-\item The following (Bessel's Inequality) holds:
-\[ \sumi |(x, e_n)|^2 = \| P_V(x) \|^2 \leq \| x \|^2, \hspace{2mm} \forall x \in H.\]
-\item $(P_n(x))_{n \geq 1}$ is a Cauchy sequence (as well as convergent) and 
-\[ \limi P_n(x) = \sumi (x, e_n) e_n = P_V(x).\]
-\end{enumerate}
-\end{theorem}
-\vspace{-20pt}
-\begin{proof}
-Let $x \in H$ be fixed and $n \geq 1$. Define $V_n = \spa\{ e_1, \cdots, e_n \}$, which is a closed subspace of $H$. We note that 
-\[ (x - P_nx, e_j) = \left( x - \sumkn (x, e_k) e_k, e_j \right) = (x, e_j) - (x, e_j) = 0\]
-for all $j \geq 1$. therefore, using the conjugate linearity of $(, \cdot)$, we get that $(x - P_nx, y) = 0$ for all $y \in V_n$. From the uniqueness of the projection, $P_nx$ is the orthonormal projection of $x$ onto $V_n$. Then, using the Pythagorean Theorem,
-\[ \| x \|^2 = \| x - P_nx \|^2 + \| P_n x \|^2 \Longrightarrow \| P_n x \|^2 \leq \| x \|^2.\]
-As well we have that 
-\[ \| P_n x \|^2 =- \left( \sumkn |(x, e_k)| e_k, \sumkn |(x, e_k)| e_k \right) = \sumkn |(x, e_k)|^2.\]
-Therefore, 
-\[ \sumkn |(x, e_k)|^2 \leq \| x \|^2  \]
-for all $x \in H$ and for all $n \geq 1$. Letting $n \to \infty$, then 
-\begin{equation}
-|(x, e_n)|^2 \leq \| x \|^2 
-\end{equation} 
-holds for all $x \in H$. Now, utilizing (4), we want to prove the Cauchy quality of $(P_nx)_{n \geq 1}$. Letting $m > n$ without loss of generality, we get that 
-\[ \| P_n x - P_m x \|^2 = \sum\limits_{k = n}^m |(x, e_n)|^2 \to 0\]
-as $m, n \to \infty$ from (4). Therefore, $(P_nx)_{n \geq 1}$ is Cauchy and hence convergent. Let $x' = \limi P_nx$. Then, letting $k \geq 1$, we have that 
-\[(x - x', e_k) = \left( x' - \sumi (x, e_n) e_n, e_k \right) = 0. \]
-Then, by using the conjugate linearity of $y \mapsto (x - x', y)$, we have that $(x -x', y) = 0$ for all $y \in \spa\{ e_1, \cdots, e_n, \cdots \}$. Now using the continuity of $y \mapsto (x - x', y)$, then we have that $(x -x', y) = 0$ for all $y \in V = \ov{\spa\{ e_1, \cdots, e_n, \cdots \}}$. On the other hand, $(x - P_Vx, y) = 0$ for all $y \in V$. Therefore, by uniqueness, we have that $P_v(x) = x'$. Thus $(2)$ has been proven and as well, 
-\[ \| P_v x \|^2 = \limi \| P_n x \|^2 = \limi \sumkn |(x, e_k)|^2 = \sumk |(x, e_k)|^2.\]
-\end{proof}
-\begin{corollary}
-If $(e_n)_{n \geq 1}$ is an orthonormal basis for $H$, then Parseval's Identity holds, i.e.,
-\[ \sumi |(x, e_n)|^2 = \| x \|^2 \hspace{2mm} \forall x \in H\]
-and 
-\[ x = \sumi (x, e_n) e_n.\]
-\end{corollary}
-\vspace{-20pt}
-\begin{proof}
-In this case, $V = \ov{\spa\{ e_1, \cdots, e_n, \cdots \} } = H$. So, $P_Vx = x$ for all $x \in H$. Now, just apply the previous theorem to get the equality. 
-\end{proof}
-As an example, take $H = \ell^2$ and let $e_n = (0, \cdots, 0, 1, 0, \cdots )$, where the $1$ is placed in the $n$th coordinate. We prove that $(e_n)_{n \geq 1}$ is an orthonormal basis for $\ell^2$. Clearly, $(e_n, e_n) = \delta_{nm}$. Then, let $x \in \ell^2$. We know that $\sumi x_n^2 < \infty$. We then, can also write 
-\[ x = \limi \sumkn x_k e_k\]
-since 
-\[ \left\| x - \sumkn x_k e_k\right\|_{\ell^2}^2 = \sum\limits_{k \geq n} \| x_k \|^2 \to 0\]
-as $n \to \infty$. Therefore, all vectors $x \in\ell^2$ are in $\ov{\spa\{e_1, e_2, \cdots \}}$. Thus it is a basis. Another way to go about this is showing that if $(x, e_n) = 0$ for all $n \geq 1$, then $x = 0$. \\
-\indent The next question that we could ask ourselves is the following: when does $H$, an infinite dimensional Hilbert space, admit a countable orthonormal basis? The following theorem tells us when this occurs:
-\begin{theorem}
-A Hilbert space $H$ admits at most a countable orthonormal basis if and only if $H$ is separable, i.e. there exits a $V$, which is a countable dense subset, $V = \{ v_n : n \geq 1 \}$ such that for all $x \in H$, for all $\epsilon > 0$, there exists a $v_n$ such that $\| x - v_n  \| < \epsilon$. 
-\end{theorem}
-\vspace{-20pt}
-As an example, consider $H = \ml^2([-\pi, \pi]) = \{ f: [-\pi, \pi] \to \C \}$, where 
-\[ (f, g) = \dintpi f \ov{g} \, dx.\]
-Define $\phi_n(x) = \frac{e^{inx}}{\sqrt{2 \pi}}$ for all $n \in \Z$. Then, we can show that $\{ \phi_n \}_{n \in \Z}$ is an orthonormal basis for $\ml^2([\pi, \pi])$, i.e.
-\[ \dintpi \phi_n(x) \ov{\phi_m(x)} = \delta_{nm},\]
-and $\spa\{ \phi_n \}_{n \in \Z}$ is dense in$ \ml^2([\pi, \pi])$ (this is shown in Bressan pg. 98). For all $f \in \ml^2([\pi, \pi])$ and for all $\epsilon > 0$, there exists a $P_N = \suml_{k = +N}^{\infty} \alpha_k e^{ikx}$ such that $\| f - P_N \| < \epsilon$. Let $f \in \ml^2([\pi, \pi])$ and define 
-\[ c_k = \frac{1}{\sqrt{2\pi}} \dintpi f(y) \, e^{-iky} \, dy.\]
-The $c_k$ are called the \textit{Fourier coefficients} of $f$, and thus, the previous theorem implies that 
-\[ \limi \dintpi \left| f(x) - \suml_{k = -N}^N c_k e^{ikx} \right|^2 \, dx = 0,\]
-which implies that $f(x) = \suml_{-\infty}^{\infty} c_k e^{ikx}$. As well, Parseval's inequality gives us that 
-\[ \dintpi f^2 \, dx = \suml_{-\infty}^{\infty} |c_k|^2 < \infty,\]
-which implies that $c_k \to 0$ as $k \to \infty$. 
-\subsection*{The Hilbert Adjoint of an Operator}
-\setcounter{equation}{0}
-Assume that $X, Y$ are Hilbert spaces and let $T \in \B(X, Y)$. For any $y \in Y$, define $f$, which maps $x \mapsto (Tx, y)_Y$. We can show that if $f$ is linear and 
-\begin{equation}
-|f(x)| \leq \| Tx \| \| y \| \leq \| T \| \| y \| \| x \|
-\end{equation} for all $x\in X$ implies that $f \in \Xs$ and the Riesz Representation Theorem states that there must exist an $x_f \in X$ such that $f(x) = (x, x_f)$ for all $x\in X$ and $\| x_f \| = \| f \| \leq \| T \| \| y \|$. We define $\Ts: Y \mapsto X$ by $\Ts y = x_f$ . From (1), we have that $(Tx, y)_Y = (x, \Ts y)_X$ for any $y \in Y$, $x \in X$. We must check that $\Ts$ is linear, but this is simple since we will just utilize the inner product. We well, we have that 
-\[ \| \Ts y \| = \| x_f \| = \| f \| \leq \| T \|  \| y \|\]
-for all $ y\in Y$. Therefore, $\Ts \in \B(Y, X)$ and
-\begin{equation}
-\| \Ts \| \leq \| T \|. 
-\end{equation}
-Note that $(\Ts)^{\star} = \Tss: X \mapsto Y$. We claim that $\Tss = T$. To do this,  we have that $(Tx, y) = (x, \Ts y)$ for all $x \in X$, $y \in Y$. So, we can see that 
-\[ \ov{(Tx, y)} = \ov{(x, \Ts y)} = (\Ts y, x) = (y, \Tss x) = \ov{(\Tss x, y)}\]
-for all $x \in X$, $y \in Y$. Therefore, this implies that $(Tx, y) = (\Tss x, y)$ for all $x \in X$, $y \in Y$. Therefore, $(Tx - \Tss x, y) = 0$, which implies that $\Tss x = Tx$ and thus, $\Tss = T$. We note that $\Ts$ is called the \textbf{Hilbert Dual} of $T$. Now, we apply (2) to $\Ts$ and we see that 
-\begin{equation}
-\| T \| = \| \Tss \| \leq \| \Ts \|.
-\end{equation}
-Thus, we get that $\| T \| = \| \Ts \|$. In summation, if $T \in \B(X, Y)$, where $X, Y$ are Hilbert, then 
-\begin{enumerate}[topsep=-15pt]
-\item $\Ts \in \B(X, Y)$
-\item $\| T \| = \| \Ts \|$
-\item $\Tss = T$, 
-\end{enumerate}
-where $(Tx, y)_Y = (x, \Ts y)_X$ for all $x\in X$, $y \in Y$. 
-\subsection*{5.7 - Weak Convergence on Hilbert Spaces}
-\begin{definition}
-A sequence $(x_n) \sbs H$ \textbf{converges weakly} to $x \in H$ (denoted by $x_n \weak x$) if $\phi(x_n) \to \phi(x)$ for all $\phi \in \Hs$. By the Riesz Representation Theorem, for any $\phi \in \Hs$, there exists a $y_0 \in H$ such that $\phi(z) = (z, y_0)$ for all $z \in H$. Then, $x_n \weak x$ if and only if $(x_n, y) \to (x, y)$ for all $y\in H$ or $(y, x_n) \to (y, x)$ for all $x \in H$. 
-\end{definition}
-\vspace{-20pt}
-Just as a remark, we note that $(x_n, y) \to (x, y)$ implies that $(y, x_n) \to (y, x)$ for all $y \in Y$ since 
-\[ | (y, x_n) - (y, x)| = \left| \ov{(x_n, y)} - \ov{(x, y)} \right| = \left| \ov{(x_n, y) - (x, y)} \right| = |(x_n, y) - (x,y)|. \]
-We now present several properties of weak convergence in Hilbert spaces. For all of these, let $(x_n) \sbs H$ be a sequence. 
-\begin{enumerate}[topsep=-15pt]
-\item[(P1)] If $x_n \to x$ strongly, then $x_n \weak x$. 
-\begin{proof}
-For all $y \in Y$, we will have that 
-\[ |(x_n, y) - (x, y) = |(x_n - x, y)| \leq \| x_n - x \| \| y \| \to 0\]
-as $n \to \infty$. 
-\end{proof} 
-\item[(P2)] If $x_n \weak x$, then $(x_n)_{n \geq 1}$ is bounded. 
-\begin{proof}
-Define $f_n: H \mapsto \K$, $f_n(y) = (y, x_n)$ for all $n \geq 1$. Then, $\| f_n \| = \| x_n \|$. Since $x_n \weak x$, then we have that $(y, x_n) \to (y, x)$ for all $y \in H$. Therefore, $f_n(y) \to (y, x)$ for all $y \in H$. Thus, $\sup\limits_{n \geq 1} \| f_n(y)\| < + \infty$ for all $y \in H$. Therefore, bu the UBP, 
-\[\sup\limits_{n \geq 1} \| f_n(y)\| < + \infty \Longrightarrow  \sup\limits_{n \geq 1} \| x_n \| < + \infty. \]
-Therefore, $(x_n)$ is bounded. 
-\end{proof}
-\item[(P3)] Any bounded sequence $(x_n) \sbs H$ contains a weakly convergent subseqence $(x_{n_k})_{k \geq 1}$. 
-\begin{proof}
-Let $(x_n) \sbs H$ be such that $\| x_n \| \leq M$ for all $n \geq 1$. Define $f_n: H \mapsto \K$, $f_n(y) = (y, x_n)$, for all $y \in H$, $n \geq 1$. Then, $(f_n) \sbs \Hs$ and $\| f_n \| = \| x_n \| \leq M$ for all $n \geq 1$. By Banach-Alaoglu theorem, there exists a $(f_{n_k})_{k \geq 1}$ that is weak $\star$ convergent subseqence to $f \in \Hs$. Thus, $f_{n_k}(y) \to f(y)$ for all $y \in H$. Then, $f \in \Hs$ implies that by the Riesz Representation Theorem, there exists an $x \in H$ such that $f(y) = (y, x)$ for all $y \in H$. Thus, $(y, x_{n_k}) \to (y, x)$ for all $y \in H$. Therefore, $x_{n_k} \weak x$. 
-\end{proof}
-\item[(P4)] If $(e_n) \sbs H$ is an orthonormal basis, then $e_n \weak 0$ an $(e_n)$ does not converge strongly.  
-\begin{proof}
-Define the set $V$, where $V = \ov{\spa\{ e_1, e_2, \cdots \}}$. Then, from a Theorem that we have proved in class, we know that 
-\[ \sum\limits_{n = 1}^{\infty} |(x, e_n)|^2 \leq \| x \|\]
-for all $x \in H$. Then, since $\|x \| < \infty$, this means that $\sum\limits_{n = 1}^{\infty} |(x, e_n)|^2 < \infty$. This must imply that $|(x, e_n)|^2 \to 0$ as $n \to 0$. Therefore, this implies that $|(x, e_n)| \to 0$, and thus, $(x, e_n) \to 0$ as $n \to \infty$. Therefore, we have that $e_n \weak 0$. 
-\end{proof}
-\item[(P5)] If $xn \weak x$ and $T \in \B(X, Y)$ where $X, Y$ are Hilbert spaces, then $Tx_n \weak Tx$. 
-\begin{proof}
-Assume that $x_n \weak x$. Then, for any $y \in Y$, 
-\[ (Tx_n, y) = (x_n, \underbrace{\Ts y}_{\in X}) \to (x, \Ts y) = (Tx, y).\]
-\end{proof}
-\item[(P6)] If $(x_n) \sbs H$, $x_n \weak x$ and $T: H \mapsto H$ is a compact operator, then $Tx_n \to Tx$ strongly, i.e. 
-\[ \| Tx_n - Tx \| \to 0.\]
-\begin{proof}
-Let $(x_n) \sbs H$ be such that $x_n \weak x$. By $(P2)$, $(x_n)$ is bounded. We assume that $Tx_n \not\to Tx$. Then, there must exist an $\epsilon_0 > 0$ and a subsequence $(x_{n_k})_{k \geq 1}$ such that 
-\begin{equation}
-\| Tx_{n_k} - Tx \| \geq \epsilon_0
-\end{equation}
- for all $k \geq 1$. Since $(x_n)$ is bounded, we must have that $(x_{n_k})$ is bounded.  Since $T$ is compact, we know that there must exit a subsequence $(x_{n_k})$, still denoted by $(x_{n_k})$ without loss of generality, such that $(Tx_{n_k})$ is convergent in $H$ to $y$. Thus, 
- \begin{equation}
- \| Tx_{n_k} - y \| \to 0
- \end{equation}
- as $k \to \infty$. We now claim that $y = Tx$. To this end, $Tx_{n_k} \to y$ strongly implies that $Tx_{n_k} \weak y$. Then, $x_n \weak x$ implies that $x_{n_k} \weak x$ and since $T$ is compact, $T$ is bounded. So, by (P5), $Tx_{n_k} \weak Tx$ and since the weak limits are unique, then $Tx = y$. Therefore, we can see that (4) and (5) contradict each other. Thus the proof is done. 
-\end{proof}
-\end{enumerate}
-As an example, let $H = \ml^2([0, \pi]) = \left\lbrace f: [0, \pi] \to \R : f \text{ measurable  and } \dint_{0}^{\pi} f(x)^2 \, dx < \infty \right\rbrace$. This is a Hilbert space and let $f_n: [0, \pi] \to \R$ such that $f_n(x) = \sin^2(nx)$ for all $n \geq 1$. Then, $f_n \in \ml^2([0, \pi])$ and let $f(x) = \frac{1}{2}$, $x \in [0, \pi]$. We claim that 
-\[ f_n \weak f \Longrightarrow \dint_0^{\pi} \sin^2(nx) \, g(x) \, dx \to \frac{1}{2} \dint_{0}^{\pi} g(x) \, dx\]
-for all $g(x) \in \ml^2([0, \pi])$. For the proof, the first step is to prove it for piecewise constant functions $g$, i.e.
-\[ g_b(x) = \begin{cases}
-1, & [0, b]\\
-0, & (b, 1].
+Define $p: X \mapsto .
 \end{cases}\]
 From this, we see that $a < b$ implies that 
 \[g_b(x) - g_a(x) = \begin{cases}
@@ -1439,7 +376,7 @@ Therefore, for all $\epsilon > 0$, there exists a $g_{\epsilon}$ piece wise cons
 \[ |(f_n, g) - (f, g)| = |(f_n - f, g)| = |(f_n - f, g - g_{\epsilon}) + (f_n - f, g_{\epsilon})| \leq |(f_n - f, g - g_{\epsilon}) | + |(f_n - f, g_{\epsilon})| < \epsilon \]
 for large $n$. Then, we can have weak convergence. \\
 \indent Then, we have three claims to finish the proof:
-\begin{enumerate}[topsep=-15pt]
+\begin{enumerate}
 \item[Claim 1:] $f_n \not\to f$ since $\| f_n - f \|^2 \frac{1}{8}$ for all $n \geq 1$. 
 \item[Claim 2:] $T: \ml^2([0, \pi]) \mapsto \ml^2([0,\pi])$, where 
 \[ (Tg)(x) = \dint_0^{x} g(t) \, dt\]
@@ -1462,16 +399,14 @@ We say that $A$ is \textbf{(strictly) positive definite} (SPD) if
 \end{equation}
 for some $beta \in \R$. 
 \end{definition}
-\vspace{-20pt}
 We note that if $H = \R^n$ and $A$ is an $n \times n$ matrix, then (1) implies that $Ax = 0$ implies that $x = 0$. Thus, $A$ is injective and thus, $A$ is invertible. 
 \begin{theorem}
 (\textbf{An SPD operator is invertible}) Let $A: H \mapsto H$ satisfying (1). Then, 
-\begin{enumerate}[topsep=-15pt, itemsep=0pt]
+\begin{enumerate}
 \item[(i)] For all $f \in H$, there exists a unique $u \in H$ such that $Au = f$ ($u = A^{-1} f$);
 \item[(ii)] The inverse satisfies $\| A^{-1} \| \leq \frac{1}{\beta}$. 
 \end{enumerate}
 \end{theorem}
-\vspace{-20pt}
 \begin{proof}
 Let $A: H \mapsto H$ be a linear, bounded operator that satisfies (1). Then, from (1), we get that 
 \[ \beta \| u \|^2 \leq (Au, u) \leq \| Au \| \| u \| \]
@@ -1488,7 +423,7 @@ Let $H$ be a Hilbert space over $\R$ and let $a : H \times H \mapsto \R$ be a \t
 \[ a(u, \beta_1 v_1 + \beta_2 v_2) = \beta_1 a(u, v_1) + \beta_2 a(u, v_2)\]
 for all $\alpha_1, \beta_1, \alpha_2, \beta_2 \in \R$ and $v_1, v_2, u_1,u_2 \in H$. 
 \begin{theorem}(\textbf{Lax-Milgram}) Assume that a is a bilinear form, $a: H \times H \mapsto \R$, and satisfies
-\begin{enumerate}[topsep=-15pt, itemsep=0pt]
+\begin{enumerate}
 \item[(i)] $|a(u, v)| \leq M \| u \| \| v \|$ for all $u, v \in H$ and for some $M > 0$ ($a$ is bounded) 
 \item[(ii)] there exists a $\beta  > 0$ such that $a(u, u) \geq \beta \| u \|^2$ for all $u \in H$ ($a$ is coercive). 
 \end{enumerate}
@@ -1498,7 +433,6 @@ Let $F: H \mapsto \R$ be a bounded linear functional. Then, the problem
 \end{center}
 has a unique solution, $u \in H$, and $\| u \| \leq \frac{1}{\beta} \| F \|$. 
 \end{theorem}
-\vspace{-20pt}
 \begin{proof}
 Since $G$, which maps $v \mapsto a(u, v)$ is linear and bounded (from (i)) on $H$, by the Riesz Representation Theorem, there exists a unique $u \in H$ such that 
 \begin{equation}
@@ -1526,7 +460,7 @@ x_2 \\
 x_n
 \end{matrix}\right]\]
 We know that 
-\begin{enumerate}[topsep=-15pt, itemsep=0pt]
+\begin{enumerate}
 \item[(R1)] $A$ injective if and only if $A$ surjective. 
 \item[(R2)] $\dim(\ker(A)) = \dim(\ker(A^{T}))$ and $\range(A)^{\perp} = \ker(A^T)$.
 \end{enumerate}
@@ -1541,17 +475,16 @@ We now present information from previous chapters to remind ourselves of key fac
 \end{proposition}
 \begin{lemma}
 For any $T \in \B(X, Y)$ where $X, Y$ are Hilbert we have that 
-\begin{enumerate}[topsep=-15pt, itemsep=0pt]
+\begin{enumerate}
 \item[(i)] $\ker(T) = \left( \range(\Ts) \right)^{\perp}$
 \item[(ii)] $ \ker(\Ts) = \left( \range(T) \right)^{\perp}$.
 \end{enumerate}
 \end{lemma}
-\vspace{-20pt}
 We note that $(ii)$ does not imply that $\range(T) = \ker(\Ts)$. This is because we have that
 \[ \ker(T)^{\perp} = \range(T)^{\perp \perp} = \ov{\range(T)}. \]
 So, the result is only true if $\range(T)$ is closed. 
 \begin{theorem}(\textbf{Fredholm's Theorem)} Let $H$ be a Hilbert Space and let $K: H \mapsto H$ be a compact operator. Then, 
-\begin{enumerate}[topsep=-15pt, itemsep=0pt]
+\begin{enumerate}
 \item[(i)] $\ker(I - K)$ is finite dimensional
 \item[(ii)] $\range(I - K)$ is closed
 \item[(iii)] $\range(I - K) = \ker(I - \Ks)^{\perp}$
@@ -1559,7 +492,6 @@ So, the result is only true if $\range(T)$ is closed.
 \item[(v)] $\ker(I - K)$ and $\ker(I - \Ks)$ ($= \range(I - K)^{\perp}$) have the same dimension 
 \end{enumerate}
 \end{theorem}
-\vspace{-20pt}
 \begin{proof}
 \begin{enumerate}
 \item[(i)] Assume that $\ker(I - K)$ is infinite dimensional. Let $\{ e_1, e_2, \cdots, e_n, \cdots \}$ be an orthonormal sequence in $\ker(I - K)$. Then $K e_n = e_n$ and $\| e_n \| = 1$, and $\| Ke_n - K e_m \| = \| e_n - e_m \| = 2$. But this implies that $(Ke_n)_{n \geq 1}$ does not admit a convergent subsequence, which contradicts $K$ being compact. 
@@ -1596,14 +528,13 @@ has no solution. This contradiction shows that (3) cannot hold, and we have that
 Interchanging the roles of $K$ and $\Ks$, we get the opposite inequality and we are done. 
 \end{enumerate}
 \end{proof}
-\vspace{-20pt}
 The big consquence of this theorem is Fredholm Alternative, written out as follows: 
 \begin{theorem}(\textbf{Fredholm Alternative:}) Let $K: H \mapsto H$ be a compact operator where $H$ is Hilbert and let $f \in H$. Consider the problem 
 \begin{equation}
 \textit{Find $u \in H$ such that $u - Ku = f \Longleftrightarrow (I - K)u = f$}.
 \end{equation}
 Then, one of the following two cases holds (a dichotomy)
-\begin{enumerate}[topsep=-15pt]
+\begin{enumerate}
 \item[1)] If $\ker(I - K) = \{ 0 \}$, then from $(iv)$, $I - K$ is one to one and onyo, and therefore, $(5)$ has a unique solution, $u = (I - K)^{-1} f$. In addition, there exists a $c > 0$ such that $ \| u \| \leq c \|f \|$. 
 \item[2)] If $\ker(I - K) = \spa \{ \phi_1, \cdots, \phi_n \}$ where $\phi_1, \cdots, \phi_n$ is a basis and $n \geq 1$, then $\ker(I - \Ks) = \spa\{ \phi_1, \cdots, \phi_n \}$ which is a basis too. Then, the problem (5) has a solution if and only if
 \[ f \in \range(I - K) \Leftrightarrow f \in \ker(I - \Ks)^{\perp} \Leftrightarrow (f, w) = 0  \forall w \in \ker(I - \Ks) \Leftrightarrow (f, \phi_k) = 0 \forall k = 1, \cdots, n.\]
@@ -1611,7 +542,7 @@ In this case, if $u$ is a solution of $(5)$, then $u + \sum\limits_{ k = 1}^n a_
 \end{enumerate}
 \end{theorem} 
 We now present a couple of notes, or consequences of the Fredholm Alternative:
-\begin{enumerate}[topsep=-15pt]
+\begin{enumerate}
 \item If $K$ is compact, this implies that $-K$ is compact. Therefore, $I + K$ satisfies the Fredholm Alternative as well.
 \item If $A \in \B(H)$ is invertible, then $A^{\star}$ is invertible and $(\As)^{-1} = (A^{-1})^{\star}$. We can see this by showing that since $A \in \B(H)$, then 
 \[ A^{-1} A = A^{-1} A = I \Longrightarrow \As(A^{-1})^{\star} = (A^{-1})^{\star} \As = I^{\star} = I.\]
@@ -1638,7 +569,7 @@ From (7), we note that $u \in \ker(\As + \Ks)$ implies that $\As u \in \ker\left
 Let $X$ be a Banach space over $\K$ ($= \R \text{ or } \C$) and let $T \in \B(X)$. 
 \begin{definition}
 We say that $\lambda \in \K$ is a
-\begin{enumerate}[topsep=-15pt]
+\begin{enumerate}
 \item[1)] \textbf{regular point of $T$} if $\lambda I = T$ is invertible.
 \item[2)] \textbf{singular point of $T$} if $\lambda I - T$ is not invertible. 
 \end{enumerate}
@@ -1647,7 +578,6 @@ We denote
 \[ \sigma(T) = \{ x \in \K : (\lambda I - T)^{-1} \text{ does not exist } \} = \{ \text{set of all singular points} \}\]
 where $\rho(T)$ is the \textbf{resolvant of $T$} and $\sigma(T)$ is the \textbf{spectrum of $T$}. As well, we say that $R: \rho(T) \to \B(X)$, where $R(\lambda) = (\lambda I - T)^{-1}$ is the \textbf{resolvant function}.
 \end{definition}
-\vspace{-15pt}
 We briefly note that $\rho(T) \cup \sigma(T) = \K$ and $\rho(T) \cap \sigma(T) = \varnothing$. Now, the spectrum $\sigma(T)$ can be split into three parts, and we define them in the next definition. 
 \begin{definition}
 Define the following three sets: 
@@ -1661,11 +591,10 @@ We say that $\sigma_p(T)$ is the \textbf{point spectrum of $T$}, $\sigma_c(T)$ i
 \begin{definition}
 Any $\lambda \in \sigma_p(T)$ is called an \textbf{eigenvalue of $T$}, i.e. there exists an $x \neq 0$ such that $(\lambda I - T) x = 0$, which is also rewritten usually as $Tx = \lambda x$. Any $k \in \ker(\lambda I - T)$, $x \neq 0$ is an eigenvector of $T$ corresponding to $\lambda$. Then, $\ker(\lambda I -T)$ is the \textbf{corresponding eigenspace}. 
 \end{definition}
-\vspace{-15pt}
 If $X$ is $\fd$, then we know that $\dim \ker(\lambda I - T) + \dim\range(\lambda I - T) = \dim(X) < \infty$. Therefore, we can see that $\ker(\lambda I - T) = \{ 0 \}$ if and only if $\lambda I - T$ is invertible. The negation of this statement is true, i.e. $\ker(\lambda I - T) \neq \{ 0 \}$ if and only if $\lambda I - T$ is not invertible. Therefore, this implies that $\lambda \in \sigma_p(T)$ if and only if $\lambda \in \sigma(T)$. Thus, if $X$ is finite dimensional, we get that $\sigma(T) = \sigma_p(T)$.
 \begin{lemma}
 Let $S, T \in \B(X)$. Then, 
-\begin{enumerate}[topsep=-15pt]
+\begin{enumerate}
 \item[(a)] If $\| T \| < 1$, then $I - T$ is invertible and $(I  - T)^{-1} = \sumo T^n = I + T + T^2 + \cdots$, and 
 \[ \| (I - T)^{-1} \| < \dfrac{1}{1 - \| T \|}.\]
 \item[(b)] If $T$ is invertible and $\| T - S \| < \frac{1}{\| T^{-1} \|}$, then $S$ is invertible and 
@@ -1674,17 +603,16 @@ Let $S, T \in \B(X)$. Then,
 \end{lemma}
 \begin{theorem}
 Let $X$ be a Banach space and $T \in \B(X)$. then, 
-\begin{enumerate}[topsep=-15pt]
+\begin{enumerate}
 \item[(a)] $\sigma(T) \sbs \{ \lambda \in \K : |\lambda| \leq \| T \| \}$;
 \item[(b)] $\sigma(T)$ is a compact set in $\K$;
 \item[(c)] If $\lambda > \| T \|$, then $\lambda \in \rho(T)$ and 
 \[ R(\lambda) = \sumo \frac{T^n}{\lambda^{n+1}} \hspace{5mm} \text{ and } \hspace{5mm} \| R(\lambda) \| < \frac{1}{|\lambda| - \| T \|}.\]
 \end{enumerate}
 \end{theorem}
-\vspace{-15pt}
 \begin{proof}
 Let $T \in \B(X)$ where $X$ is a Banach space.
-\begin{enumerate}[topsep=-15pt]
+\begin{enumerate}
 \item[(a)] If $|\lambda | > \| T \|$, then $\lambda I - T = \lambda (I - \frac{1}{\lambda} T)$ and $\| \frac{1}{\lambda} T \| = \frac{1}{|\lambda |} \| T \| < 1$. By Lemma 2, we get that $I - \frac{1}{\lambda} T$ is invertible and therefore, $\lambda I - T$ is invertible. Thus, we must have that $\lambda \in \rho(T)$. Therefore, this all implies that if $|\lambda | > \| T \|$, then $\lambda \in \rho(T)$. Therefore, the contrapositive is true, namely $\lambda \in \sigma(T)$ implies that $|\lambda | \leq \| T \|$, which proves that $\sigma(T)$ is a subset of the set above. 
 \item[(b)] From (a), we can see that $\sigma(T)$ is bounded. It is enough then to show that $\sigma(T)$ is closed, or that $\sigma(T)^c = \rho(T)$ is open. To do this, let $\lambda_0 \in \rho(T)$. Then, $\lambda I - T$ is invertible by definition. We want to apply Lemma 2 to this situation. We want to pick a $\lambda$ close to $\lambda_0$ such that if we denote $S = \lambda I - T$ and $T = \lambda_0 I - T$, we can get 
 \[ \| S - T \| = \| \lambda - \lambda_0 \| = |\lambda - \lambda_0| < \frac{1}{\| (\lambda_0 I - T)^{-1} \|}.\]
@@ -1696,19 +624,17 @@ Now, using Lemma 2(b), we can see that
 Using this representation, one can readily see that the norm of $R$ satisfies the condition in the problem. 
 \end{enumerate}
 \end{proof}
-\vspace{-25pt}
 We denote $\sigma_c(T) \cup \sigma_r(T) = \sigma_e(T)$ as the \textbf{essential spectrum}. We now consider properties regarding the spectral properties in a Hilbert space, making this into a proposition.
 \begin{proposition}
 Let $X$ be a Hilbert space, $\la \cdot, \cdot \ra$ be an inner product and let $\Ts$ be defined as $\la Tx, y \ra = \la x, \Ts y \ra$ for all $x, y \in X$ where $T \in \B(X)$. Then,
-\begin{enumerate}[topsep=-15pt]
+\begin{enumerate}
 \item[(a)] $\lambda \in \sigma(T)$ if and only if $\ov{\lambda} \in \sigma(\Ts)$;
 \item[(b)] If $\lambda \in \sigma_p(T)$, then $\ov{\lambda} \in \sigma_p(\Ts) \cup \sigma_r(\Ts)$;
 \item[(c)] If $\lambda \in \sigma_r(T)$, then $\ov{\lambda} \in \sigma_p(\Ts)$.
 \end{enumerate}
 \end{proposition}
-\vspace{-25pt}
 \begin{proof}
-\begin{enumerate}[itemsep=0pt]
+\begin{enumerate}
 \item[(a)] We will prove that $\lambda \in \rho(T)$ if and only if $\ov{\lambda} \in \rho(\Ts)$ and this will imply our result. We observe the following if and only if statements:
 \begin{align*}
 \lambda \in \rho(T) & \Longleftrightarrow \lambda I - T \text{ invertible } \\
@@ -1722,7 +648,6 @@ Therefore, taking the negation of the statement, we have our result.
 \item[(c)] Let $\lambda \in \sigma_r(T)$. Then, we know that $K = \ov{(\lambda I - T) X}$ is a proper subspace of $X$. Therefore, this means that $\{ 0 \} \neq K^{\perp} = \ker(\ov{\lambda} I - \Ts)$, which implies that $\ov{\lambda}$ is an eigenvalue of $\Ts$. Therefore, $\ov{\lambda} \in \sigma_p(\Ts)$.  
 \end{enumerate}
 \end{proof}
-\vspace{-25pt}
 As an example, take $L, R :\ell^2 \mapsto \ell^2$ as the left and right shift operators, namely
 \[ L(x_1, x_2, \cdots) = (x_2, x_3, x_4, \cdots) \hspace{5mm} R(x_1, x_2, x_3, \cdots) = (0, x_1, x_2, \cdots).\]
 We now want to compute $\sigma_p(L), \sigma(L), \sigma_p(R),$ and $\sigma(R)$. First, we note that $\| L \| = \| R \| = 1$, which has been proved in previous homework assignments. From (a) of Theorem 3, we can see that $\sigma(L), \sigma(R) \sbs \ov{D(0, 1)}$, where $D(0, 1)$ is the disk of radius 1 with center 0. So, let $\lambda \in \sigma_p(L)$. Then, we must have that 
@@ -1735,13 +660,12 @@ So, if $\lambda = 0$, then $x = 0$, which is a contradiction. So, if $\lambda \n
 \section*{6.2 - Spectrum of Compact Operators}
 \begin{theorem}
 Let $H$ be an in$\fd$ Hilbert Space and $K: H \mapsto H$ be compact. Then,
-\begin{enumerate}[topsep=-15pt, itemsep=0pt]
+\begin{enumerate}
 \item[(a)] $0 \in \sigma(K)$;
 \item[(b)] $\sigma(K) = \sigma_p(K) \cup \{ 0 \}$ (i.e., the essential supremum is at most 0);
 \item[(c)] $\sigma_p(K)$ is either finite or countable and if countable, then $\sigma_p(K) = \{ \lambda_n : n \geq 1\}$ and $\lambda_n \to 0$, i.e. if $\sigma_p(K)$ is infinite, then it accumulates only at 0. 
 \end{enumerate}
 \end{theorem}
-\vspace{-25pt}
 \begin{proof}
 \begin{enumerate}
 \item[(a)] If $0 \neq \sigma(K)$, then $K$ is invertible. Then, there must exist a $K^{-1} : H \mapsto H$, $K^{-1} \in \B(H)$. So, $I = K \circ K^{-1}$, but since $K$ is compact, $K^{-1}$ is bounded, and compositions of a compact operator and a bounded operator are compact, then $I$ must be compact. Therefore, this implies that $H$ must be finite dimensional, which is a contradiction. 
@@ -1760,7 +684,6 @@ Therefore, this implies that $\| K e_n - K e_m \| \geq |\lambda_n| \to | \lambda
 is a countable union of finite sets, and thus countable. Therefore, $\sigma_p(K)$ is at most countable.
 \end{enumerate}
 \end{proof}
-\vspace{-25pt}
 \subsection*{6.3 - Self-Adjoint Operators}
 \begin{definition}
 Let $H$ be a Hilbert Space and $T: H \mapsto H$ be a bounded linear operator. We define $T$ to be \textbf{$\saj$} (or \textbf{symmetric}) if $\Ts = T$, i.e. $\la Tx, y \ra = \la x, Ty \ra$ for all $x, y \in H$.
@@ -1780,7 +703,6 @@ One can find that this is $\saj$ since $\As = \ov{A^T} = A$.
 \begin{proposition}
 Eigenvalues of $\saj$ operators are real. 
 \end{proposition}
-\vspace{-25pt}
 \begin{proof}
 Let $(\lambda, x)$ be an eigenpair for $T = \Ts$. We know that 
 \[ \la Tx, x \ra = \la \lambda x, x \ra = \lambda \| x\|^2\]
@@ -1790,12 +712,10 @@ By the $\saj$ness of the operators, we must have that $\ov{\lambda} \| x\|^2 = \
 \begin{proposition}
 If $T$ is $\saj$, then $(Tx, x) \in \R$. 
 \end{proposition}
-\vspace{-25pt}
 \begin{proof}
 We note that $(Tx, x) = \ov{(x, Tx)}$. Since $(x, Tx) = (Tx, x)$, we have that $\ov{(x, Tx)} = (x, Tx)$, which implies that $(x, Tx) \in \R$. Thus, $(Tx, x) \in \R$. 
 \end{proof}
 Now, we will define 
-\vspace{-5pt}
 \begin{align*}
 m & = \inf_{\| u \| = 1} (Tu, u)  = \inf_{u \neq 0} \dfrac{(Tu, u)}{\| u \|^2}\\
 M & = \sup_{\| u \| = 1} (Tu, u)  = \sup_{u \neq 0} \dfrac{(Tu, u)}{\| u \|^2}
@@ -1834,9 +754,8 @@ Thus, $M = \| T \|$.
 Therefore, $\| (MI - T)u_n \| \to 0$ which implies that $(MI - T)u_n \to 0$, and thus, $M \in \sigma(T)$. 
 \end{enumerate}
 \end{proof}
-\vspace{-25pt}
 A couple of notes regarding this lemma:
-\begin{enumerate}[topsep=-15pt, itemsep=0pt]
+\begin{enumerate}
 \item[(1)] If $T \in \B(H)$ and $T = \Ts$, then 
 \[ \| T \| = \sup\limits_{\| x \| = 1 } |\la Tx, x \ra | = \sup\limits_{x \neq 0} \frac{|\la Tx, x \ra |}{\| x \|^2}. \] We note that if $M > |m|$, then $\| T \| = M$ and if $M < |m|$, then $\| T \| = |m|$.
 \item[(2)] If $M \geq 0$ and $m = 0$, then $\| T \| = M = \sup\limits_{x \neq 0} \frac{|\la Tx, x \ra|}{\| x \|^2}$. 
@@ -1845,12 +764,11 @@ A couple of notes regarding this lemma:
 \begin{theorem} (\textbf{Hilbert-Schmidt Theorem})
 Eigenvectors of compact symmetric operators form an orthonormal basis. More formally, let $H$ be a separable Hilbert space and $T: H \mapsto H$ be a compact self-adjoint operator. Then, there exists a countable orthonormal basis consisting of eigenvectors of $T$. 
 \end{theorem}
-\vspace{-25pt}
 \begin{proof}
 We remember that if $H$ is finite dimensional and $\Ts T = T \Ts$ (which is clearly satisfied if $T$ is self-adjoint), we say that $T$ is \textbf{normal}. If $\K = \C$, then we have the Compact Spectral Theorem (in Axler), and we know that there exists a finite basis of orthonormal vectors. If $\K = \R$, we have that the Real Spectral Theorem gives us the same result. \\
 \indent So, we will assume that $H$ is in$\fd$. Since $T$ is compact, let $(\lambda_n)_{n \geq 1}$ be the sequence of distinct eigenvalues where $\lambda_n \neq 0$ for all $n \geq 1$. Denote $\lambda_0 = 0$, $E_0 = \ker(T)$, and $E_n = \ker(\lambda_n I - T)$. We know that $E_0 \sbs H$ and since $H$ is separable, $E_0$ is separable. Because of this fact, $E_0$ admits an orthonormal countable basis of eigenvectors corresponding to $\lambda_0 = 0$. Since $T$ is compact, we have that $E_n$ is $\fd$ and admits an orthonormal basis. \\
 We now claim that $H = E_0 \oplus E_1 \oplus E_2 \cdots \oplus E_n \oplus \cdots$ in the sense that 
-\begin{enumerate}[topsep=-15pt]
+\begin{enumerate}
 \item[(i)] the spaces $E_n$ are mutually orthogonal, and
 \item[(ii)] if $F = \Span\left( \bigcup\limits_{n = 0}^{\infty} E_n \right)$, then $F$ is dense in $H$. 
 \end{enumerate}
@@ -1864,7 +782,6 @@ since $F^{\perp}$ and $F$ are, by definition, orthogonal. Therefore, $Tu \in F^{
 for all $x, y \in F^{\perp}$. We now claim that $\sigma(T_0) = \{ 0 \}$. To this end, suppose not. Then, since $T_0$ is compact, there must exist a $\lambda \in \sigma(T_0)$, $\lambda \neq 0$ such that $\lambda$ is an eigenvalue, i.e. $T_0 v = \lambda v$ for some vector $v \in F^{\perp}$, $v \neq 0$. This also implies that $Tv = \lambda v$ for some $v \neq 0$, and therefore, there must exist an $n \geq 1$ such that $\lambda = \lambda_n$. However, this implies that $v \in E_n \sbs F$, which means that $v \in F \cap F^{\perp}$. Thus, $v = 0$ which is a contradiction. Therefore, $\sigma(T_0) = \{ 0 \}$, which  means that by note (3), $T_0 \equiv 0$. \\
 \indent This gives us that $T \vert_{F^{\perp}} \equiv 0$, which necessarily implies that $F^{\perp} \sbs E_0 \sbs F$. Thus, we must have that $F^{\perp} = \{ 0 \}$, which gives us that $F$ is dense in $H$. Therefore, (ii) is proved and thus, we can choose an orthonormal basis for each $E_n$ and union them all together to get a countable orthonormal basis. 
 \end{proof}
-\vspace{-25pt}
 We now assume that $H$ is a Hilbert and separable space and $T \in \B(H)$ is compact and $\saj$. Let $(e_k)_{k \geq 1}$ be a basis for $\bigcup\limits_{n \geq 1} E_n$, where $E_n = \ker(\lambda_n I - T)$, $E_0 = \ker(T)$ and $(\lambda_n)_{n \geq 1} = \sigma_p(T)$, $\lambda_n \neq 0$. Then, for all $f \in H$, we have that 
 \[f = \underbrace{P_{E_0}(f)}_{\in E_0} + \underbrace{( I - P_{E_0})(f)}_{\in E_0^{\perp}} = P_{E_0}(f) + \sum\limits_{k = 1}^{\infty} \la f, e_k \ra e_k.\]
 If we assume further that for some $m \geq 0$, $\la Tx, x \ra \geq m\la x, x \ra$ and we note that $\la Tx, x \ra \leq \| T \| \| x \|^2$, this implies that $\| Tx \| \geq M \| x\|$ for all $x \in H$ and thus, $\range(T)$ is closed. Therefore, $\range(T) = \ker(T)^{\perp}$ (since $T$ is $\saj$). Thus, if $f \in \range(T)$, we have that $P_{E_0}(f) = 0$ and thus, 
@@ -1891,7 +808,6 @@ For any $u \in D(\Om)$, we have that
 \[ \left( \dintom |u|^2 \, dx \right)^{\frac{1}{2}} \leq C(\Om) \left( \dintom |\nabla u|^2 \, dx \right)^{\frac{1}{2}},\]
 where $C(\Om)$ is a constant that depends on $\Om$.
 \end{theorem}
-\vspace{-25pt}
 We will eventually see that $\left( D(\Om), \| \nabla \cdot \|_{\ml^2} \right) \sbs \ell^2$ is a normed space, but it is not complete. Now, we define $\Hz$ as the closure of $\left( D(\Om), \| \nabla \cdot \|_{\ml^2(\Om)} \right)$ in $\ml^2(\Om)$, i.e. 
 \[ \Hz(\Om) = \left\lbrace u \in \ml^2(\Om) : \dintom |\nabla u|^2\, dx < \infty, u \vert_{\p \Om} = 0 \right \rbrace. \]
 We note that the inner produce on $\Hz(\Om)$ is 
@@ -1901,7 +817,6 @@ The Poincar\'e inequality in $\Hz$ is
 Therefore, we have that $(\Hzo, \| \cdot \|_{\Hzo}) \sbs \ml^2(\Om)$ is an embedding, and we can see that convergence in $\Hzo$ implies convergence in $\ml^2(\Om)$, but not vice versa. 
 \begin{theorem}(\textbf{Rellick-Kondrachor Theorem}) Define $i: \Hzo \to \mlto$, where $iu = u$ for all $u \in \Hz$. Then, $i$ is a compact operator. This implies that bounded sequences in $\Hzo$ have convergent subsequences.
 \end{theorem}
-\vspace{-25pt}
 This theorem means that $\Hzo$ is a \textbf{compact embedding} into $\mlto$, denoted by $\Hzo \sbs \sbs \mlto$. Define $\is$ to be the Hilbert dual of $i$. Then, $(\is f, v)_{\Hz} = (f, iv) = (f, v)$ for all $v \in H$. Then, $(\nabla u, \nabla v) = (f, v)$ for all $v \in \Hzo$. Then, $\is f$ is the representation of $v \mapsto (f, v)$ in $\Hz$, and thus, 
 \[ |(f, v)| \leq \underbrace{\| f \| \| v \|_{\mlt} \leq \| f \|  \, C(\Om)  \, \| v \|_{\Hz}}_{\text{by Poincar\'e Identity}}. \]
 \subsection*{Elliptic Equations (Ch. 9 in AB)}
@@ -1915,7 +830,7 @@ where $u_{x_j} = \frac{\p u}{\p x_j}$. Now, the main problem with these elliptic
 for all $x \in \Om$. Then, we have our \textbf{uniform} \textbf{ellipticity} condition, 
 \[ (A \xi, \xi) \geq \theta |\xi|^2.\]
 We also assume that that $a^{ij}$ is symmetric, i.e. $\aij(x) = a^{ji}(x)$ for all $x \in \Om$. Now, we introduce the main problem:
-\begin{enumerate}[topsep=-15pt]
+\begin{enumerate}
 \item[(MP)] \textit{Given that $f \in \mlto$, find $u \in \Hzo$ such that }
 \begin{equation}
 Lu  =  - \sumijd (\aij(x) u_{x_i} )_{x_j} = f.
@@ -1926,7 +841,7 @@ Trying to solve this question, multiplying (2) by $v \in \Hzo$ and integrating b
 and integrating by parts, we can get that 
 \[\dintom (\aij(x) u_{x_i})_{x_j} v  = \dintom \aij(x) u_{x_i} v_{x_j} + \underbrace{\dint_{\p \Omega} (\aij(x) u_{x_j}){x_i} v}_{ = 0}. \]
 Therefore, we can find the \textit{weak formulation} for the main problem, (MP).
- \begin{enumerate}[topsep=-15pt]
+ \begin{enumerate}
 \item[(WF)] \textit{Find $u \in \Hzo$ such that}
 \[ B(u, v) = \sumijd \dintom \aij (x) u_{x_i} v_{x_j} = \dintom fv, \hspace{5mm} \forall x \in \Hzo\]
 \textit{or $B(u, v) = (f, v)_{\mlto}$ for all $x \in \Hzo$.}
@@ -1942,7 +857,6 @@ which is a bounded functional on $\Hz$, i.e. this belongs to $\Hzod$. Then, we c
 Then, using the Riesz Representation Theorem, there must exist a $u_f \in \Hzo$ such that $(u_f, v)_{\Hzo} = F(v)$, which implies that $(\nabla u_f, \nabla v) = (f, v)$ for all $v \in \Hzo$. As well, by using (3), we can have that 
 \[ \| u_f \| = \| F \|_{\Hzod} \leq |C(\Om)| \| f \|_{\mlto}.\]
 Therefore, (WF) is equivalently asking the following question:
-\vspace{-15pt}
 \begin{center}
 \textit{Find $u \in \Hzo$ such that $B(u, v) = (u_f, v)_{\Hzo} = (f, v)$ for all $v \in \Hzo$}.
 \end{center}

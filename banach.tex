@@ -1,0 +1,197 @@
+\chapter{Banach Spaces}
+Let $X$  be a vector space over $\K$, where $\K = \R$ or $\C$. 
+\begin{definition}
+A function $d: X \times X \mapsto [0, \infty)$ is said to be a \textbf{metric} if 
+\begin{enumerate}
+\item[(D1)] $d(x, y) \geq 0$, for all $x, y \in X$. 
+\item[(D2)] $d(x, y) = 0$ if and only if $x = y$.
+\item[(D3)] $d(x, y) = d(y, x)$ for all $x, y \in X$.
+\item[(D4)] $d(x, z) \leq d(x, y) + d(y, z)$ for all $x, y, z \in X$. 
+\end{enumerate}
+\end{definition}
+\begin{definition}
+A function $\| \cdot \| : X \to [0, \infty)$ is called a norm if 
+\begin{enumerate}
+\item[(N1)] $\| x \| \geq 0$, for all $x \in X$, $\| x \| = 0$ if and only if $\mx = 0$. 
+\item[(N2)] $\| \lambda x \| = | \lambda | \| x \|$ for all $ \lambda \in \K$, $x \in X$. 
+\item[(N3)] $\| x + y \| \leq \| x \| + \| y \|$ for all $x, y \in X$. 
+\end{enumerate}
+\end{definition}
+We know that the norm induces some distance and thus, we call $(X, \| \cdot \|)$ a \textbf{normed space}. Defined $d(x, y) = \| x - y \|$ for all $x, y \in X$. We can easily check that this satisfies a distance on $X$. 
+We also note the following properties: 
+\begin{enumerate}
+\item $d(x + z, y + z) = d(x, y)$. This means that $d$ is \textit{invariant under translation}.
+\item $d(\lambda x, \lambda y) = |\lambda| d(x, y)$, which means that $d$ is \textit{positively homogeneous}. 
+\item $B(x, r) = \{ y \in X \mid d(x, y) < r \}$ is a convex set, which means that $x, y \in B$, when $\lambda x + (1 - \lambda) y \in B$ for any $\lambda \in [0, 1]$ We define that $B(x,r)$ to be the \textbf{open ball} centered at $x$ with radius $r$, and we define $\ov{B}(x, r) = \{ y \in X \mid d(x, y) \leq r \}$ to be the \textbf{closed ball} centered at $x$ with radius $r$. 
+\end{enumerate}
+We note that $x \mapsto \| x \|$ is a continuous function since one can prove that $\left| \| x \| - \| y \| \right| \leq \| x - y \|$ and thus, we have continuity since $x_n \to x$ implies that $\| x_n \| \to \| x \|$. 
+\begin{definition}
+A sequence $(x_n)_{n \geq 1} \in X \sse \K$, a normed space, \textbf{converges} to $x_0 \in X$ if 
+\[ \limi \| x_n - x_0 \| = 0.\]
+If $(y_n)_{n \geq 1}  \in X$, then the series $\sumk y_k$ is convergent if $x_n = \suml_{k = 1}^n y_k$ converges to a vector $\mx_0 \in x$, i.e.
+\[ \limi \| (y_1 + y_2 + \cdots + y_n) - \mx_0 \| = 0.\]
+In this case, $\mx_0 = \sumi y_n$ is the \textbf{sum of the series}.
+\end{definition}
+\begin{definition}
+A sequence $\xs \in X$ is a \textbf{Cauchy sequence} if for all $\epsilon > 0$, there exists an $N \in \N$ such that for all $m, n \geq N$, then $\| x_n - x_m \| < \epsilon$. 
+\end{definition}
+We remark that convergence implies Cauchy, but the opposite is not true in general.
+\begin{definition}
+A normed space $(X, \| \cdot \|)$ is \textbf{complete} (or a \textbf{Banach space}) if every Cauchy sequence is convergent (to an $x \in X$). 
+\end{definition}
+We now present a couple of examples:
+\begin{enumerate}
+\item On $\R^n$, $x = (x_1, x_2, \cdots, x_n) \in \R^n$, then 
+\[ \| x \| = \| x \|_2 := \sqrt{x_1^2 + x_2^2 + \cdots + x_n^2}.\]
+Let $1 \leq p \leq \infty$ and define 
+\[ \| x \|_p := \left(|x_1|^p + |x_2|^p + \cdots + |x_n|^p  \rp^{\frac{1}{p}} \]
+if $1 \leq q < \infty$ and 
+\[ \| x \|_{\infty} = \max \{ |x_1| , |x_2|, \cdots, |x_n| \}.\]
+We note that if we fix $x \in \R^n$, $\lim\limits_{p \to \infty} \| x \|_p = \| x \|_{\infty}$. We can also show that $\lp \R^n, \| \cdot \|_p \rp$ is a Banach space. 
+\item For infinite sequences ($\ell^p$ spaces, $1 \leq p \leq \infty)$, let $x = (x_1, x_2, \cdots) = \xs$, $x_n \in \R$ (or $\C$). Then, we can denote 
+\[ \| x \|_p = \lp \sumk |x_k|^p \rp^{\frac{1}{p}} \]
+and 
+\[ \|x \|_{\infty} = \sup\limits_{k \geq 1} \{ |x_k| \}.\]
+We will then call the set 
+\[ \ell^p = \{ x = \xs : \| x \|_p < \infty \} = \llb x = \xs : \sumk |x_k|^p < \infty \rrb \]
+\end{enumerate}
+\begin{lemma}
+If $p > 1$, $q > 1$, and $\frac{1}{p} + \frac{1}{q} = 1$, then 
+\[ ab \leq \frac{a^p}{p} + \frac{b^q}{q}.\] (For proof, see P.234 of AB)
+\end{lemma}
+\begin{theorem}
+(\textbf{Holder's Inequality}) If $p, q > 1$, $\frac{1}{p} + \frac{1}{q} = 1$, then 
+\begin{equation}
+\sumi |x_n \cdot y_n| \leq \| x \|_p \| y \|_q 
+\end{equation}
+for all $x \in \ell^{p}$, $y \in \ell^{q}$, where equality holds if and only if there exist $\alpha$ and $\beta$ independent of $n$ such that $\alpha | x_n |^p = \beta | y_n |^q$, where $x = (x_1, x_2, \cdots)$ and $y = (y_1, y_2, \cdots)$. 
+\end{theorem}
+\begin{proof}
+Assume that $x \neq 0$ and $y \neq 0$, and denote $X = \frac{x}{\| x \|_p}$ and $Y = \frac{y}{\|y \|_q}$. Note then that $\|X \|_p = \| Y \|_q = 1$. Dividing (1) by $\| x \|_p \| y \|_q$, we obtain
+\[ \sumi \left| \frac{x_n}{\| x_n \|_p }\frac{y_n}{\|y_n \|_q} \right| \leq 1 \Longrightarrow \sumi | X_n Y_n | \leq 1. \]
+Now, we must have that 
+\begin{align*}
+\sumi |X_n Y_n | & = \sumi |X_n| |Y_n| \\
+& \leq \sumi \lp \frac{1}{p} |X_n|^p + \frac{1}{q} |Y_n|^q \rp \\
+& = \frac{1}{p} \sumi |X_n|^p + \frac{1}{q} \sumi |Y_n|^q \\
+& = \frac{1}{p} \| X\|_p^p  + \frac{1}{q} \| Y \|_q^q \\
+& = \frac{1}{p} + \frac{1}{q} = 1,
+\end{align*}
+there the inequality in line 2 stems from the Lemma 0.1. This proves the formula, and we can see that we have equality if and only if $a^p = b^q$. 
+\end{proof}
+\begin{theorem}
+\textbf{(Minkowski's Theorem}) If $p > 1$, then 
+\begin{equation}
+\| x + y \|_p \leq \| x \|_p + \| y \|_p
+\end{equation}
+for all $x, y \in \ell^p$.
+\end{theorem}
+\begin{proof}
+Assume again that $x \neq 0$ and $y \neq 0$. Assuming without loss of generality that $x_n > 0$ and $y_n > 0$, knowing that if $\frac{1}{p} + \frac{1}{q} = 1$, then $q(p - 1) = p$, and applying (1), we will have that
+\begin{align*}
+\| x + y \|_p^p &  = \sumi |x_n + y_n|^p\\
+& \leq \lp |x_n| + |y_n| \rp^p \\
+& = \sumi (x_n + y_n)^p \\
+& = \sumi x_n( x_n + y_n)^{p-1} + \sumi y_n(x_n + y_n)^{p-1} \\
+& \leq \lp \sumi x_n^p \rp^{\frac{1}{p}} \lp \sumi (x_n + y_n)^{(p-1)q} \rp^{\frac{1}{q}} + \lp \sumi y_n^p \rp^{\frac{1}{p}} \lp \sumi (x_n + y_n)^{(p-1)q} \rp^{\frac{1}{q}} \\
+& =\lp \sumi (x_n + y_n)^p \rp^{\frac{1}{q}} \lp \| x \|_p + \| y\|_p \rp.
+\end{align*}
+So, we will have that 
+\begin{equation}
+\sumi (x_n + y_n)^p \leq \lp \sumi (x_n + y_n)^p \rp^{\frac{1}{q}} \lp \| x \|_p + \| y\|_p \rp
+\end{equation}
+\[ \lp \sumi (x_n + y_n)^p \rp^{1 - \frac{1}{q}} \leq \|x \|_p + \| y \|_p \]
+\[\lp \sumi (x_n + y_n)^p \rp^{\frac{1}{p}} \leq \|x \|_p + \| y \|_p  \]
+\[ \| x + y \|_p \leq \| x \|_p + \| y \|_p.\]
+\end{proof}
+\begin{theorem}
+$\ell^p$ is a Banach space for all $1 \leq p \leq \infty$. 
+\end{theorem}
+\begin{proof}
+We have proven that $\ell^p$ is a normed space, so it just goes to show that it is complete. To this end, let $a^n = \lp a_k^n \rp_{k \geq 1}$ is a Cauchy sequence in $\ell^p$ ($1 \leq p < \infty$). Then, for all $\epsilon > 0$, there exists an $N_0$ such that for all  $m, n \geq N_0$, $\| a^n  - a^m \|_p^p < \epsilon^p$. This implies that 
+\begin{equation}
+|a_k^n - a_k^m|^p \leq \sumk |a_k^n - a_k^m|^p < \epsilon^p.
+\end{equation}
+Thus, for all $\epsilon > 0$, there exists that same $N_0$ (independent of $k$) such that $|a_k^n - a_k^m| < \epsilon$ for all $m, n \geq N_0$. Then, $(a_k^n )_{n \geq 1}$ (fixing $k$) is Cauchy in $\K$, which is complete so $(a_k^n)_{n \geq 1}$ is convergent to $a_k \in \K$ for all $k \in \N$. Let $a = (a_1, a_2, \cdots, a_k ,\cdots)$. Letting $m \to \infty$ in (4), we have that for all $\epsilon >0$, there is that $N_0 \in \N$ such that for all $n \geq N_0$, 
+\begin{equation}
+\sumk | a_k^n - a_k |^p \leq \epsilon^p \Longrightarrow \| a^n - a \|_p^p \leq \epsilon^p.
+\end{equation}
+Choosing $N > N_0$, we have that 
+\[ \| a \|_p \leq \| a^n - a \|_p + \| a^n \|_p < \epsilon^p + \| a^n \|_p < \infty,\]
+which implies that $a \in \ell^p$. Therefore, from (5), we have that $a^n \to a$ in $\ell^p$ because for all $\epsilon > 0$, there is that $N_0$ such that for all $n \geq N_0$, $\| a^n  - a \| \leq \epsilon$. 
+\end{proof}
+\subsection*{$\ml^p(\Om)$ spaces}
+Let $\Om \sse \R^d$ be open and $1 \leq p < \infty$. Then, we define
+\[ \ml^p(\Om) : = \llb f: \Om \mapsto \R : f \text{ measurable  and } \dint_{\Om} |f(x) |^p < \infty \rrb. \]
+The norm is defined as 
+\[ \| f \|_p = \| f \|_{ml^p(\Om)} = \lp \dint |f|^p \, dx \rp^{\frac{1}{p}}.\]
+Here, we have that $f \equiv g$ if $f = g$ almost everywhere (a.e.). We also define 
+\[
+ \ml^{\infty}(\Om) = \{ f: \Om \mapsto \R : \exists M > 0 \text{ s.t. } |f(x)| < M \text{ a.e.} \}, 
+ \]
+where 
+\[ 
+\|f\|_{\infty} : = \esssup |f(x)| : = \inf \{ M > 0 :  |f(x)| < M \text{ a.e.}\}.
+  \]
+ {\bf  Exercise:} a) Use the $\varepsilon$-characterization of $\inf$ to describe  $\|f\|_{\infty}$. \\
+ b) Justify  that if $f \in  \ml^{\infty}(\Om)$, then for any $\varepsilon>0$ the set 
+ \[
+ \{ x\in \R: |f(x)|>\|f\|_{\infty} - \varepsilon\}
+ \]
+  is of positive measure. 
+ 
+\begin{theorem}
+$\ml^p(\Om)$ for $1 \leq p \leq \infty$ are Banach spaces.
+\end{theorem}
+A couple of notes on this theorem. The proof is on page 235, you need the Holder and Minkowski's Theorems, and the proof that $\ml^p$ is complete is called the Riesz-Fisher Theorem.  
+\subsection*{Linear Operators}
+Let $X, Y$ be normed spaces over $\K$ (either $\R$ or $\C$).
+\begin{definition}
+A \textbf{linear operator} is a mapping $T: \text{Dom}(T) \in X \mapsto T$ such that 
+\[ T(c_1 x_1 + c_2 x_2) = c_1 T x_1 + c_2 T x_2, \text{ for all } x_1, x_2 \in \text{Dom}(T), c_1, c_2 \in \K.\]
+We also define the \textbf{range} of a function to be
+\[ \text{Range}(T) = R(T) - \{ Tx : x \in \text{Dom}(T) \} \sbs Y.\] 
+We also define the \textbf{null space} or \textbf{kernel}  of $T$ to be $\ker(T) = \{ x \in \text{Dom}(T) : Tx = 0 \}$. We note that $T$ is injective if and only if $\ker(T) = \{ 0 \}$.
+\end{definition}
+\begin{definition}
+Assume that $D(T) = X$ and $T$ is a linear operator from $D(T) = X \mapsto Y$. Then, we say $T$ is \textbf{bounded} if 
+\[ \| T \| = \sup\limits_{\| x \| \leq 1} \| T x\| < \infty. \]
+\end{definition}
+\begin{theorem}
+Suppose $T: X \mapsto Y$ is a linear operator. The following statements are equivalent:
+\begin{enumerate}
+\item[(a)] $T$ is continuous on $X$
+\item[(b)] $T$ is continuous at $0$
+\item[(c)] $T$ is bounded
+\item[(d)] There exists a $C > 0$ such that $\| Tx \| \leq C \| x \|$ for all $x \in X$. 
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+We will prove that $(a) \Leftrightarrow (b) \Rightarrow (c) \Rightarrow (d) \Rightarrow (b)$. 
+\begin{enumerate}
+\item[$(a) \Rightarrow (b)$:] This is clear.
+\item[$(b) \Rightarrow (a)$:] Let $x_n \to x \in X$. We need to prove that $Tx_n \to Tx$. To show this, we note that $x_n \to x$ implies that $|x_n - x| \to 0$. Since $T$ is continuous at 0, we have that $T(x_n - x) \to T(0) = 0$, or 
+\[ Tx_n - T_x \to 0 \Longleftrightarrow Tx_n \to Tx \text{ in X }.\]
+\item[$(b) \Rightarrow (c)$:] Assume that $T$ is continuous at 0. We claim that $A = \{ \| Tx \| : \| x \| < 1 \}$ is bounded, and to prove this, we suppose not. Then, for all $n \geq 1$, there exists $x_n \in X$ such that $\| x_n \| \leq 1$ and $\| Tx_n \| \geq n$. Let $y_n = \frac{1}{n} x_n$. Then, we will have that $\| y_n \| = \frac{1}{n} \| x_n \| \leq \frac{1}{n} \to 0$, which implies that $y_n \to 0$. Thus, we must have that $Ty_n \to T(0) = 0$. We also can see that 
+\[ \| Ty_n \| = \left\| T \left(\frac{1}{n} x_n\right) \right\| = \frac{1}{n} \| T x_n \| \geq 1,\]
+but we have that $Ty_n \to 0$, which is a contradiction. Thus, we proved that $A$ is bounded.
+\item[$(c) \Rightarrow (d)$:] Let us assume that $T$ is bounded. Let $M = \sup\limits_{\| x \| \leq 1} \| Tx \| < \infty$. For any $x \in X$, $x \neq 0$, where $x' = \frac{x}{\| x \|}$ satisfies $\| x' \| = 1$, we must have that $\| Tx' \| \leq M$, which means that 
+\[ \left\| T \frac{x}{\| x \|} \right\| \leq M \Longrightarrow \frac{1}{ \|x \|} \| Tx \| \leq M \Longrightarrow \| Tx \| \leq M \| x \|. \]
+\item[$(d) \Rightarrow (b)$:] Assume that there exists a $c > 0$ such that $\| Tx \| \leq c \| x \|$. We need to prove that $x_n \to 0$ implies that $Tx_n \to 0$. Let $x_n \in x$, $x_n \to 0$. Then, we have that $\| T x_n \| \leq c \| x_n \|$ and $\| x_n \| \to 0$. this must imply that $\| Tx_n \| \to 0$ and thus, $Tx_n \to 0$. Thus, $T$ is continuous at 0. 
+\end{enumerate}
+\end{proof}
+We will define $\B(X,Y) : \{ T: X \to Y : T \text{ is a linear, continuous operator} \}$ and is the space of all bounded, linear operators. If $T, T_1, T_2 \in \B(X, Y)$ $\alpha \in \K$, and $x \in X$, then we will have that 
+\[ (T_1 + T_2)x = T_1 x + T_2 x, \hspace{5mm} T(\alpha x) = \alpha T(x), \hspace{5mm} \| T \| = \sup\limits_{\| x \| \leq 1 } \| Tx\|. \]
+\begin{theorem}
+If $X, Y$ are normed spaces over $\K$ and $Y$ is a Banach space, then $\B(X, Y)$ is a Banach space (Theorem 2.12 in book).
+\end{theorem}
+If we have that $Y = \K$, then $\B(X, Y) = \B(X, \K)$ is denoted by $\Xs$, which is the \textbf{dual} of $X$. If, $f \in B(X, \K)$, then $f: X \to \K$ and $f$ is linear. This is called a \textbf{functional}. Then, $\| f \|_{\Xs} = \sup\limits_{\| x \| \leq 1} |f(x)|$. Even though $X$ does not have to be a Banach space, $\Xs$ \textit{is} a Banach space. If $Y = X$, then $\B(X, Y) = \B(X)  = \{ T: X \mapsto X : T \text{ is a linear functional } \}$. Here are a few examples:
+\begin{enumerate}
+\item Let $x = \{ f: (0, \pi) \mapsto \R : f \text{ continuous, bounded on } (0, \pi) \}$. Then, we have that $\|f \| < \infty$. We define $T: X \mapsto X$ where $Tf = f^{\pr}$. Then, we have that 
+\[ \hspace{-10mm} \text{Dom}(x) = \{ f: (0, \pi) \mapsto \R : f \text{ differentiable, } f^{\pr} \text{ continuous and differentiable on } (0, \pi) \} \subsetneq X.\]
+We note however that $f_n(x) = \sin(nx)$, $x \in (0, \pi) \in \text{Dom}(T)$. Then, $Tf_n(x) = n\cos(nx) \in \text{Dom}(T)$. We note that $\| f_n \| = 1$, and then $\| Tf_n \| = n$. So, we can see that $T$ is not bounded since $\| f_n \| \leq 1$ and   $\|T \| = + \infty$, for $f_n \to f$. 
+\item We can define $\Lambda_+, \Lambda_- : \ell^p \mapsto \ell^p$ as the shift operators, where 
+\[ \Lambda_+(x_1, x_2, \cdots) = (0, x_1, x_2, \cdots)\]
+\[ \Lambda_-(x_1, x_2, \cdots) = (x_2,  x_3, \cdots).\]
+We can find that $\Lambda_+$ is injective but not surjective, and vice-versa for $\Lambda_-$.
+\end{enumerate}
